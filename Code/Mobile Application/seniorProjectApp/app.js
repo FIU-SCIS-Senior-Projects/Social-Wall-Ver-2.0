@@ -20,9 +20,10 @@ Ext.application({
     views: [
         'Main',
         'Cast',
-        'CastModal'
+        'CastModal',
+        'CampaignList'
     ],
-    controllers:['Main','Cast'],
+    controllers:['Main','Cast','CampaignListController'],
     icon: {
         '57': 'resources/icons/Icon.png',
         '72': 'resources/icons/Icon~ipad.png',

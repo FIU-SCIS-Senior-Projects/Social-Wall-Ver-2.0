@@ -9,17 +9,36 @@
 // Examples of using the icon mixin:
 // @include icon('user');
 
+$phone-width : 767px;
+$tablet-width : 768px;
+$desktop-width : 1024px;
+
+@mixin respond-to($media) {
+  @if $media == phones {
+    @media only screen and (max-width:767px) { @content; }
+  }
+  @else if $media == tablets {
+    @media only screen and (min-width: 768px) and (max-width: 1023px) { @content; }
+  }
+  @else if $media == desktops {
+    @media only screen and (min-width: 1024px) { @content; }
+  }
+}
+
+
 
 .main-panel{
 	background-color:#92cbf8;;
 }
 .big-button.bigblue{
-background-color: #036cbd;
-border: medium none;
-font-family: "Gotham-Bold",Helvetica,Arial,sans-serif;
-font-size: 20px;
-margin: 10px;
-width: 320px;
+	width:300px;
+	margin: 10px;
+	background-color: #036cbd;
+	border: medium none;
+	font-family: "Gotham-Bold",Helvetica,Arial,sans-serif;
+	@include respont-to(desktops){
+		width:200px !important;
+	}
 }
 .big-button.bigblue .x-button-label{
 	color:white !important;
@@ -33,3 +52,4 @@ width: 320px;
 .icon-cast, #cast-button{
 	float:right !important;
 }
+

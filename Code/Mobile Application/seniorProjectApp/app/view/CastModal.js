@@ -11,9 +11,7 @@ Ext.define('ZapCast.view.CastModal', {
         modal:true,
         fullscreen:true,
         cls:'CastModal',
-       // style:'background-color:#4F5450; opacity:0;',<div class="cast-halo-inner></div>
-       // html:'<div class="cast-panel"></div><div class="cast-halo-outer"></div>',
-        layout:{
+       layout:{
         	type:'vbox',
         	pack:'center',
         	align:'center'

@@ -667,11 +667,14 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
+  "ZapCast.controller.CampaignListController": [],
   "ZapCast.controller.Cast": [],
   "ZapCast.controller.Main": [],
+  "ZapCast.view.CampaignList": [],
   "ZapCast.view.Cast": [],
   "ZapCast.view.CastModal": [],
-  "ZapCast.view.Main": []
+  "ZapCast.view.Main": [],
+  "ZapCast.view.Searching": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1403,13 +1406,16 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "ZapCast.controller.CampaignListController": [],
   "ZapCast.controller.Cast": [],
   "ZapCast.controller.Main": [],
+  "ZapCast.view.CampaignList": [],
   "ZapCast.view.Cast": [],
   "ZapCast.view.CastModal": [],
   "ZapCast.view.Main": [
     "widget.main"
-  ]
+  ],
+  "ZapCast.view.Searching": []
 });
 
 

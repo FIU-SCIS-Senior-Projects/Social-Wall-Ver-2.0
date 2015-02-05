@@ -29,34 +29,24 @@ Ext.define('ZapCast.controller.Main', {
 	 		var passwordForm = this.getPasswordField().getValue();
 	 		var tooken = usernameForm + ":" + passwordForm;
 	 		var hash = window.btoa(tooken);
+	 		var basic = "Basic " + hash;
+	 		/*
+			var that = this;
+			$.ajaxSetup({
+			    beforeSend: function(xhr) {
+			        xhr.setRequestHeader('Authorization', tooken);
+			        //xhr.setRequestHeader('X-Parse-REST-API-Key', 'mbm311*****d0X2N');
+			    }
+			});*/
 
-	 		Ext.Ajax.request({
-    			url: this.getUrl(),
-    			method : 'GET',
-    			//useDefaultXhrHeader: false,
-    			//headers:{
-    			//	"Authorization":"Basic "+ hash
-    			//},
-    			params :{
-        username : usernameForm,
-        password : passwordForm
-     },
-    			success: function(options, success, response) {
-        			alert("Login Success");
-    			},
-    			failure : function(response) {
-        			alert("Login failed");
-    			},
-    			scope:this
-			});
+		
+			//		$.get(that.getUrl(),function(data){
+			//			alert(data);
+		//		});
 			
 	 		setTimeout(function(){
 			Ext.Viewport.setMasked(false);
-				
-
-
-
-			//Ext.Viewport.setActiveItem(Ext.create('ZapCast.view.Cast'));
+			Ext.Viewport.setActiveItem(Ext.create('ZapCast.view.CampaignList'));
 	 		}, 1000);
 	 } 
 

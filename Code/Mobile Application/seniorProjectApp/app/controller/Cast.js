@@ -32,10 +32,10 @@ Ext.define('ZapCast.controller.Cast', {
         }
     })	},
     launch:function(){
-        	if(ConnectSDK != null){
-        		alert('I was launched');
-        		ConnectSDK.discoveryManager.startDiscovery();
-			}
+        //	if(ConnectSDK != null){
+        //		alert('I was launched');
+        //		ConnectSDK.discoveryManager.startDiscovery();
+		//	}
 
     }
 });
