@@ -4,4 +4,4 @@
  * combination of content from app.json, and all required package's package.json
  * files.  Customizations should be placed in app.json.
  */
-{"id":"ab7b93fb-b60c-4f94-a55a-769814eac06e","js":[{"path":"touch/sencha-touch.js","isSdk":true},{"path":"bootstrap.js"},{"path":"app.js","update":"delta"}],"css":[{"path":"resources/css/cupertino.css","update":"delta"}]}
+{"id":"ab7b93fb-b60c-4f94-a55a-769814eac06e","js":[{"path":"cordova.js","remote":true},{"path":"touch/sencha-touch.js","isSdk":true},{"path":"bootstrap.js"},{"path":"app.js","update":"delta"}],"css":[{"path":"resources/css/cupertino.css","update":"delta"}]}

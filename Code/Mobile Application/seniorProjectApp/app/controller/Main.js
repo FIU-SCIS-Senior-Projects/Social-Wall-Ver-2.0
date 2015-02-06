@@ -30,19 +30,19 @@ Ext.define('ZapCast.controller.Main', {
 	 		var tooken = usernameForm + ":" + passwordForm;
 	 		var hash = window.btoa(tooken);
 	 		var basic = "Basic " + hash;
-	 		/*
+	 		
 			var that = this;
 			$.ajaxSetup({
 			    beforeSend: function(xhr) {
-			        xhr.setRequestHeader('Authorization', tooken);
+			        xhr.setRequestHeader('Authorization', basic);
 			        //xhr.setRequestHeader('X-Parse-REST-API-Key', 'mbm311*****d0X2N');
 			    }
-			});*/
+			});
 
 		
 			//		$.get(that.getUrl(),function(data){
 			//			alert(data);
-		//		});
+			///	});
 			
 	 		setTimeout(function(){
 			Ext.Viewport.setMasked(false);

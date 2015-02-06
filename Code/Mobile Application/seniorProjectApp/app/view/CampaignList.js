@@ -5,7 +5,7 @@
  */
 Ext.define('ZapCast.view.CampaignList', {
     extend: 'Ext.Container',
-    requires: ['Ext.TitleBar','Ext.List'],
+    requires: ['Ext.TitleBar','Ext.List','Ext.Spacer'],
 
     config: {
     	fullscreen:true,
@@ -13,7 +13,13 @@ Ext.define('ZapCast.view.CampaignList', {
        	items:[{
        		xtype:'titlebar',
        		docked:'top',
-       		title:'Select A Campaign'
+       		title:'Select A Campaign',
+          items:[{
+              iconCls:'icon-cast',
+              hidden:true,
+              align: 'right',
+              id:'thecastbutton'
+          }]
        	},{
        		xtype:'list',
        		id:'theCampaignList',
@@ -24,10 +30,7 @@ Ext.define('ZapCast.view.CampaignList', {
 		        { title: 'Graduation 2015' },
 		        { title: 'Selfies' },
 		        { title: 'Birthday 2014' }
-		    ],
-		    listeners:{
-		    	
-		    }
+		    ]
 		}]
     }
 

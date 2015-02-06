@@ -1,0 +1,49 @@
+Environment setup instructions
+—————————————————————————————
+
+Setup ConnectSDK
+———————————————-
+
+1. Download source code from git at https://github.com/FIU-SCIS-Senior-Project-2015-Spring/Social-Wall-Ver-2.0
+
+2. The IOS Xcode project can be found at Code/Mobile Application/seniorProjectApp/cordova/platforms/ios it is the file with the .xcodeproj file extension.
+
+3.clone the Connect SDK IOS github reposttory at https://github.com/ConnectSDK/Connect-SDK-iOS.git
+
+4.Set up the submodules by running the following commands in Terminal
+	git submodule init
+	git submodule update
+
+5.Open the .xcodeproj file in Xcode.
+
+6.Drag the Connect SDK Xcode project (from step 3) into your project's Xcode library.
+
+7. Navigate to your project's settings screen, then navigate to the Build Phases tab.
+
+8. Add ConnectSDK as a Target Dependency.
+
+9. add the following in the Link Binary With Libraries section
+	libConnectSDK.a
+	libz.dylib
+	libicucore.dylib
+
+10. Navigate to the Build Settings tab and add -ObjC to your target's Other Linker Flags
+
+11. Build and run the Project if errors occur continue with the next steps.
+
+Setup Connect SDK Chromecast IOS Framework
+——————————————————————————————————————————
+
+1.Go to the Google Cast Developer site (https://developers.google.com/cast/docs/downloads ) and download the iOS sender library
+
+2.Extract the GoogleCast.framework bundle from the downloaded ZIP file
+
+3. Move the framework bundle into your google-cast folder of your project under the Connect SDK Xcode project from step 6.
+
+4. Add GoogleCast.framework and MediaAccessibility.framework to Link Binary With Libraries section and drag GoogleCast.framework to the Frameworks folder of your project.
+
+5. Build and Run your Application.
+
+
+
+

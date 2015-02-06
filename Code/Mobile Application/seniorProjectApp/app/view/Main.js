@@ -1,7 +1,7 @@
 Ext.define('ZapCast.view.Main', {
     extend: 'Ext.Panel',
     xtype: 'main',
-    requires: ['Ext.Img','Ext.field.Text','Ext.Button'],
+    requires: ['Ext.Img','Ext.field.Text','Ext.Button','Ext.field.Password'],
     config: {
         cls:'main-panel',
         layout:{
@@ -12,7 +12,7 @@ Ext.define('ZapCast.view.Main', {
         items: [
             {   
                 xtype:'panel',
-                html: '<img src="resources/images/FotoZapLogoMediumCropedcopy.png"/>'            
+                html: '<img src="resources/images/FotoZapLogoMediumCropedcopy-ConvertImage.png"/>'            
             },{
                 xtype: 'textfield',
                 id: 'email',
@@ -21,7 +21,7 @@ Ext.define('ZapCast.view.Main', {
                 placeHolder:'Username'
             },
             {
-                xtype: 'textfield',
+                xtype: 'passwordfield',
                 id: 'password',
                 cls:'text-field-login',
                 clearIcon:false,
