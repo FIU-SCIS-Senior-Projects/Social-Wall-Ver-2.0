@@ -4,19 +4,19 @@ Environment setup instructions
 Setup ConnectSDK
 ———————————————-
 
-1. Download source code from git at https://github.com/FIU-SCIS-Senior-Project-2015-Spring/Social-Wall-Ver-2.0
+1. Download the projects source code from github at https://github.com/FIU-SCIS-Senior-Project-2015-Spring/Social-Wall-Ver-2.0
 
 2. The IOS Xcode project can be found at Code/Mobile Application/seniorProjectApp/cordova/platforms/ios it is the file with the .xcodeproj file extension.
 
-3.clone the Connect SDK IOS github reposttory at https://github.com/ConnectSDK/Connect-SDK-iOS.git
+3. Clone the Connect SDK IOS github repository at https://github.com/ConnectSDK/Connect-SDK-iOS.git
 
-4.Set up the submodules by running the following commands in Terminal
+4.Set up the submodules by running the following commands in Terminal in the directory of the cloned repository from step 3
 	git submodule init
 	git submodule update
 
-5.Open the .xcodeproj file in Xcode.
+5.Open the .xcodeproj ( file from step 2 ) the main xcode project  in Xcode.
 
-6.Drag the Connect SDK Xcode project (from step 3) into your project's Xcode library.
+6.Drag the Connect SDK Xcode project (from step 3) into your main project's Xcode library.
 
 7. Navigate to your project's settings screen, then navigate to the Build Phases tab.
 
