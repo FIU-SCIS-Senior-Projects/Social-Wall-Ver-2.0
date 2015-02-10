@@ -32,7 +32,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSet": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLResultSetRowList": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
-  "ZapCast": "app"
+  "FotoZap": "app"
 });
 
 Ext.ClassManager.addNameAlternateMappings({
@@ -656,14 +656,14 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "ZapCast.controller.CampaignListController": [],
-  "ZapCast.controller.Cast": [],
-  "ZapCast.controller.Main": [],
-  "ZapCast.view.CampaignList": [],
-  "ZapCast.view.Cast": [],
-  "ZapCast.view.CastModal": [],
-  "ZapCast.view.Main": [],
-  "ZapCast.view.Searching": []
+  "FotoZap.controller.CampaignListController": [],
+  "FotoZap.controller.Cast": [],
+  "FotoZap.controller.Main": [],
+  "FotoZap.view.CampaignList": [],
+  "FotoZap.view.Cast": [],
+  "FotoZap.view.CastModal": [],
+  "FotoZap.view.Main": [],
+  "FotoZap.view.Searching": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1384,16 +1384,16 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
-  "ZapCast.controller.CampaignListController": [],
-  "ZapCast.controller.Cast": [],
-  "ZapCast.controller.Main": [],
-  "ZapCast.view.CampaignList": [],
-  "ZapCast.view.Cast": [],
-  "ZapCast.view.CastModal": [],
-  "ZapCast.view.Main": [
+  "FotoZap.controller.CampaignListController": [],
+  "FotoZap.controller.Cast": [],
+  "FotoZap.controller.Main": [],
+  "FotoZap.view.CampaignList": [],
+  "FotoZap.view.Cast": [],
+  "FotoZap.view.CastModal": [],
+  "FotoZap.view.Main": [
     "widget.main"
   ],
-  "ZapCast.view.Searching": []
+  "FotoZap.view.Searching": []
 });
 
 

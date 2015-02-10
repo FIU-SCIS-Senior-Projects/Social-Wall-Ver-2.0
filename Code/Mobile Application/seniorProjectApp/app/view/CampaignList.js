@@ -3,7 +3,7 @@
  * @extends Ext.Panel
  * Description
  */
-Ext.define('ZapCast.view.CampaignList', {
+Ext.define('FotoZap.view.CampaignList', {
     extend: 'Ext.Container',
     requires: ['Ext.TitleBar','Ext.List','Ext.Spacer'],
 

@@ -3,7 +3,7 @@
  * @extends Ext.Panel
  * Description
  */
-Ext.define('ZapCast.view.Cast', {
+Ext.define('FotoZap.view.Cast', {
     extend: 'Ext.Container',
     requires: ['Ext.Toolbar','Ext.Button'],
 
@@ -23,7 +23,7 @@ Ext.define('ZapCast.view.Cast', {
         }],
         listeners:{
         painted:function(me,eopts){
-            var modal = Ext.create('ZapCast.view.CastModal');
+            var modal = Ext.create('FotoZap.view.CastModal');
             Ext.Viewport.add(modal);
             //alert(modal);
             modal.show();

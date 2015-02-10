@@ -11,7 +11,7 @@
 */
 
 Ext.application({
-    name: 'ZapCast',
+    name: 'FotoZap',
 
     requires: [
         'Ext.MessageBox'
@@ -47,7 +47,7 @@ Ext.application({
         Ext.fly('appLoadingIndicator').destroy();
 
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('ZapCast.view.Main'));
+        Ext.Viewport.add(Ext.create('FotoZap.view.Main'));
     },
 
     onUpdated: function() {

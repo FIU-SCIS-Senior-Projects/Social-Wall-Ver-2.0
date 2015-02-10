@@ -5,7 +5,7 @@
  * The controller that listens to the user interactions from the main page
  * of the application (ZapCast.views.Main).
  */
-Ext.define('ZapCast.controller.Main', {
+Ext.define('FotoZap.controller.Main', {
     extend: 'Ext.app.Controller',
     requires:['Ext.Ajax'],
 	config:{
@@ -32,21 +32,31 @@ Ext.define('ZapCast.controller.Main', {
 	 		var basic = "Basic " + hash;
 	 		
 			var that = this;
-			$.ajaxSetup({
-			    beforeSend: function(xhr) {
-			        xhr.setRequestHeader('Authorization', basic);
+			//$.ajaxSetup({
+			//    beforeSend: function(xhr) {
+			//        xhr.setRequestHeader('Authorization', basic);
 			        //xhr.setRequestHeader('X-Parse-REST-API-Key', 'mbm311*****d0X2N');
-			    }
-			});
+			//    }
+			//});
 
-		
-			//		$.get(that.getUrl(),function(data){
-			//			alert(data);
-			///	});
-			
+		/*
+					$.ajax({
+						url:that.getUrl(),
+						type:'GET',
+						username:usernameForm,
+						password:passwordForm,
+						dataType:'json',
+						success:function(data){
+								alert('success');
+						},
+						error:function(error){
+								alert('error');
+						}	
+				});
+		*/	
 	 		setTimeout(function(){
 			Ext.Viewport.setMasked(false);
-			Ext.Viewport.setActiveItem(Ext.create('ZapCast.view.CampaignList'));
+			Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.CampaignList'));
 	 		}, 1000);
 	 } 
 

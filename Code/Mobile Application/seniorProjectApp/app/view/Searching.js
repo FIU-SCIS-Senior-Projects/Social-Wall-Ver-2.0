@@ -3,7 +3,7 @@
  * @extends Ext.Panel
  * Description
  */
-Ext.define('ZapCast.view.Searching', {
+Ext.define('FotoZap.view.Searching', {
     extend: 'Ext.Panel',
     requires: [],
 	config: {

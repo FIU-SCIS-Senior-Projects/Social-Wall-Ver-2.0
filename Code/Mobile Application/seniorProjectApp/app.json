@@ -9,7 +9,7 @@
                     "platforms": "ios",
 
                     "id": "com.myCompany.ZapCast",
-                    "name": "ZapCast"
+                    "name": "FotoZap"
                 }
             }
         }
@@ -19,7 +19,7 @@
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "ZapCast",
+    "name": "FotoZap",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file

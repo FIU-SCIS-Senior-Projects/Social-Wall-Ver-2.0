@@ -3,9 +3,9 @@
  * @extends Ext.app.Controller
  * Description
  */
-Ext.define('ZapCast.controller.CampaignListController', {
+Ext.define('FotoZap.controller.CampaignListController', {
     extend: 'Ext.app.Controller',
-    requires: [],
+    requires: ['Ext.MessageBox'],
 	config: {
         activeCampaign:null,
         refs:{
@@ -60,14 +60,30 @@ Ext.define('ZapCast.controller.CampaignListController', {
         if(this.ConnectSDKAvailable()){
             var devices = ConnectSDK.discoveryManager.getDeviceList();
             if(devices.length > 0 ){
+                var that = this;
                 if(this.checkActiveCampaign()){
-                    ConnectSDK.discoveryManager.pickDevice();
+                   var  thoe = that;
+                    ConnectSDK.discoveryManager.pickDevice().success(function(device){
+                           if(device.isReady()){
+                            thoe.deviceConnected();
+                           }else{
+                            device.on("ready", thoe.deviceConnected());
+                            device.connect();
+                           }
+                           device.on("disconnect", thoe.deviceDisconnected()); 
+                    });
                 }else{
-                        Ext.MessageBox.alert('ZapCast','Please select a Campaign');
+                        Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);
                 }
                 
             }
         }
+    },
+    deviceConnected:function(){
+        this.getCastButton().setIconCls('icon-cast-connected');
+    },
+    deviceDisconnected:function(){
+      this.getCastButton().setIconCls('icon-cast');  
     }
 
 

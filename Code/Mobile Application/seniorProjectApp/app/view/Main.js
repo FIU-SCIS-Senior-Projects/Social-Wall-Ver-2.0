@@ -1,4 +1,4 @@
-Ext.define('ZapCast.view.Main', {
+Ext.define('FotoZap.view.Main', {
     extend: 'Ext.Panel',
     xtype: 'main',
     requires: ['Ext.Img','Ext.field.Text','Ext.Button','Ext.field.Password'],

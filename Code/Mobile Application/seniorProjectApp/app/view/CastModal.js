@@ -3,7 +3,7 @@
  * @extends
  * Description
  */
-Ext.define('ZapCast.view.CastModal', {
+Ext.define('FotoZap.view.CastModal', {
     extend: 'Ext.Panel',
     requires:['Ext.Label','Ext.Button','Ext.Img'],
 
