@@ -7,6 +7,8 @@ Ext.define('FotoZap.controller.CampaignListController', {
     extend: 'Ext.app.Controller',
     requires: ['Ext.MessageBox'],
 	config: {
+        webAppId:'407D3C8E',
+        device:null,
         activeCampaign:null,
         refs:{
         	campaignList:'#theCampaignList',
@@ -64,13 +66,14 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 if(this.checkActiveCampaign()){
                    var  thoe = that;
                     ConnectSDK.discoveryManager.pickDevice().success(function(device){
+                            thoe.setDevice(device);
                            if(device.isReady()){
-                            thoe.deviceConnected();
-                           }else{
-                            device.on("ready", thoe.deviceConnected());
+                                thoe.deviceConnected();
+                            }else{
+                            device.on("ready", thoe.deviceConnected,thoe);
                             device.connect();
                            }
-                           device.on("disconnect", thoe.deviceDisconnected()); 
+                           device.on("disconnect", thoe.deviceDisconnected,thoe); 
                     });
                 }else{
                         Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);
@@ -81,6 +84,15 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
+
+        this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
+            Ext.Msg.alert("Alert","web app launch success",Ext.emptyFn);
+        }).error(function (err) {
+            Ext.Msg.alert("Alert","web app launch error:",Ext.emptyFn);
+        });
+
+
+
     },
     deviceDisconnected:function(){
       this.getCastButton().setIconCls('icon-cast');  

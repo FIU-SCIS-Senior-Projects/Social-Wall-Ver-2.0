@@ -7,7 +7,7 @@
  */
 Ext.define('FotoZap.controller.Main', {
     extend: 'Ext.app.Controller',
-    requires:['Ext.Ajax'],
+    requires:['Ext.Ajax','Ext.MessageBox'],
 	config:{
 		url:'https://zap-rest.fotozap.com/campaigns',
 		refs:{
@@ -30,35 +30,29 @@ Ext.define('FotoZap.controller.Main', {
 	 		var tooken = usernameForm + ":" + passwordForm;
 	 		var hash = window.btoa(tooken);
 	 		var basic = "Basic " + hash;
-	 		
-			var that = this;
-			//$.ajaxSetup({
-			//    beforeSend: function(xhr) {
-			//        xhr.setRequestHeader('Authorization', basic);
-			        //xhr.setRequestHeader('X-Parse-REST-API-Key', 'mbm311*****d0X2N');
-			//    }
-			//});
-
-		/*
-					$.ajax({
-						url:that.getUrl(),
-						type:'GET',
-						username:usernameForm,
-						password:passwordForm,
-						dataType:'json',
-						success:function(data){
-								alert('success');
+	 		var that = this;
+				/*Ext.Ajax.request({
+						url:'http://zap-rest.fotozap.com/campaigns',
+						method:'GET',
+						headers:{
+							'Authorization':basic
 						},
-						error:function(error){
-								alert('error');
-						}	
+						success:that.errorResponse,
+						failure:that.successResponse
 				});
-		*/	
+			*/
 	 		setTimeout(function(){
 			Ext.Viewport.setMasked(false);
 			Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.CampaignList'));
 	 		}, 1000);
-	 } 
-
+	 }, 
+	 errorResponse:function(response){
+	 	Ext.Viewport.setMasked(false);
+	 	Ext.Msg.alert('SocialWall','Error!\n Login Failed! Please try again later.',Ext.emptyFn);
+	 },
+	 successResponse:function(response){
+	 	Ext.Viewport.setMasked(false);
+	 	Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.CampaignList'));
+	 }
     
 });
