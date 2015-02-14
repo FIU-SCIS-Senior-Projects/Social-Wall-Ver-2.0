@@ -15,13 +15,20 @@ Ext.application({
 
     requires: [
         'Ext.MessageBox'
+        
     ],
-
-    views: [
+    views:[
+        'CampaignList',
         'Main',
         'Cast',
         'CastModal',
-        'CampaignList'
+        'CampaignPage'
+    ],
+    models:[
+        'Campaign'
+    ],
+    stores:[
+        'StoreCampaign'
     ],
     controllers:['Main','Cast','CampaignListController'],
     icon: {

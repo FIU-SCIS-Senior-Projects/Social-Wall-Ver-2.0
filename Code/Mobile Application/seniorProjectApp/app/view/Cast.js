@@ -25,9 +25,8 @@ Ext.define('FotoZap.view.Cast', {
         painted:function(me,eopts){
             var modal = Ext.create('FotoZap.view.CastModal');
             Ext.Viewport.add(modal);
-            //alert(modal);
             modal.show();
-            //alert('yeah');
+            
         }
     }
 }

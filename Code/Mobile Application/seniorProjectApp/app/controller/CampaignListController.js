@@ -5,24 +5,35 @@
  */
 Ext.define('FotoZap.controller.CampaignListController', {
     extend: 'Ext.app.Controller',
-    requires: ['Ext.MessageBox'],
+    requires: ['Ext.MessageBox','FotoZap.model.Campaign'],
 	config: {
         webAppId:'407D3C8E',
+        jsondata:null,
         device:null,
         activeCampaign:null,
         refs:{
-        	campaignList:'#theCampaignList',
+        	campaignList:{
+                selector:'#theCampaignList',
+                xtype:'campaignlist',
+                autoCreate:true
+            },
             castButton:'#thecastbutton'
         },
         control:{
         	campaignList:{
         		select:'CampaignSelected',
-                initialize:'ListInit'
+                initialize:'ListInit',
+                applyStore:function(oldstore,newstore){
+                    alert('hahaha');
+                }
         	},
             castButton:{
                 tap:'ConnectToChromecast'
             }
         }
+    },
+    applyJsondata:function(newjsondata,oldjsondata){
+    this.getCampaignList().getStore().setData(newjsondata);
     },
     CampaignSelected:function(list,record,e0pts){
     	this.setActiveCampaign(record.data.title);
@@ -85,12 +96,13 @@ Ext.define('FotoZap.controller.CampaignListController', {
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
 
-        this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
+       /* this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
             Ext.Msg.alert("Alert","web app launch success",Ext.emptyFn);
         }).error(function (err) {
             Ext.Msg.alert("Alert","web app launch error:",Ext.emptyFn);
         });
-
+        */
+        
 
 
     },

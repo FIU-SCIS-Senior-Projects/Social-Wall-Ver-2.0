@@ -1,37 +1,20 @@
 /**
- * @class ZapCast.view.CampaignList
- * @extends Ext.Panel
+ * @class MyNamespace.CampaignList
+ * @extends extendsClass
  * Description
  */
+ Ext.require(['FotoZap.store.StoreCampaign']);
+ var store = Ext.create('FotoZap.store.StoreCampaign');
+ //store.add({id:'hello',title:'boss'});
+
 Ext.define('FotoZap.view.CampaignList', {
-    extend: 'Ext.Container',
-    requires: ['Ext.TitleBar','Ext.List','Ext.Spacer'],
-
+    extend: 'Ext.dataview.List',
+    require:['FotoZap.store.StoreCampaign'],
+    xtype:'campaignlist',
     config: {
-    	fullscreen:true,
-    	layout:'fit',
-       	items:[{
-       		xtype:'titlebar',
-       		docked:'top',
-       		title:'Select A Campaign',
-          items:[{
-              iconCls:'icon-cast',
-              hidden:true,
-              align: 'right',
-              id:'thecastbutton'
-          }]
-       	},{
-       		xtype:'list',
-       		id:'theCampaignList',
-       		cls:'expanded-list',
-       		itemTpl: ['{title}'],
-       		data: [
-		        { title: 'Disney 2012' },
-		        { title: 'Graduation 2015' },
-		        { title: 'Selfies' },
-		        { title: 'Birthday 2014' }
-		    ]
-		}]
+        id:'theCampaignList',
+       	cls:'expanded-list',
+        store:store,
+        itemTpl: ['{title}']
     }
-
 });
