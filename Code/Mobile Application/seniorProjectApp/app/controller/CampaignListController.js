@@ -96,14 +96,19 @@ Ext.define('FotoZap.controller.CampaignListController', {
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
 
-       /* this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
+        this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
             Ext.Msg.alert("Alert","web app launch success",Ext.emptyFn);
         }).error(function (err) {
             Ext.Msg.alert("Alert","web app launch error:",Ext.emptyFn);
         });
-        */
         
-
+       /* var comand = this.getDevice().getLauncher().launchBrowser('http://wall.fotozap.com/chromecast-receiver');
+        
+        command.success(function (launchSession) {
+            console.log("command was successful");
+        }).error(function (err) {
+            console.error("command failed");
+        });*/
 
     },
     deviceDisconnected:function(){
