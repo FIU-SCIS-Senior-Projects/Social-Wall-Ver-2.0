@@ -1,0 +1,85 @@
+// The following two lines import the default Sencha Touch theme. If you are building
+// a new theme, remove them and the add your own CSS on top of the base CSS (which
+// is already included in your app.json file).
+//@import 'sencha-touch/default';
+//@import 'sencha-touch/default/all';
+
+// Custom code goes here..
+
+// Examples of using the icon mixin:
+// @include icon('user');
+
+$phone-width : 767px;
+$tablet-width : 768px;
+$desktop-width : 1024px;
+
+//.x-navigation-bar.x-docked-top , .screen-top.x-docked-top{
+//  padding-top: 20px !important;
+//}
+
+.main-panel{
+	background-color:#92cbf8;;
+}
+.big-button.bigblue{
+	width:300px;
+	margin: 10px;
+	background-color: #036cbd;
+	border: medium none;
+	font-family: "Gotham-Bold",Helvetica,Arial,sans-serif;
+
+}
+.big-button.bigblue .x-button-label{
+	color:white !important;
+}
+.text-field-login{
+	border:1px solid white !important;
+	border-radius:10px !important;
+	margin:10px !important;
+	width:320px !important;
+}
+.icon-cast, #cast-button{
+	float:right !important;
+}
+
+  
+    @media only screen and (max-width:767px) {
+
+	  .big-button.bigblue{
+
+	  	width:70% !important;
+	  }
+	.text-field-login{
+		width:70% !important;
+	}
+
+
+
+   }
+
+  
+    @media only screen and (min-width: 768px) and (max-width: 1023px) { 
+
+    	.big-button.bigblue{
+
+	  	width:40% !important;
+	  }
+
+	  .text-field-login{
+		width:40% !important;
+	}
+
+     }
+  
+  
+    @media only screen and (min-width: 1024px) {
+
+    	.big-button.bigblue{
+
+	  	width:25% !important;
+	  }
+
+
+
+     }
+  
+

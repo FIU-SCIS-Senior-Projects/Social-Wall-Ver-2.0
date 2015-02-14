@@ -1,0 +1,43 @@
+// The following two lines import the default Sencha Touch theme. If you are building
+// a new theme, remove them and the add your own CSS on top of the base CSS (which
+// is already included in your app.json file).
+@import 'sencha-touch/cupertino';
+@import 'sencha-touch/cupertino/all';
+
+
+@include icon-font('CastIcons', inline-font-files(
+  'cast/icomoon.woff', woff,
+  'cast/icomoon.ttf', truetype,
+  'cast/icomoon.svg', svg,
+  'cast/icomoon.eot', eot
+));
+
+@include icon("icon-cast-connected"  , "\e600", "CastIcons");
+@include icon("icon-cast", "\e601", "CastIcons");
+/*
+.cast-panel{
+	background-color:#000010;
+	opacity:0.5;
+	height:100%;
+	width:100%;
+}
+.cast-halo-outer{
+	position:absolute;
+	top:0;
+	right:15px;
+	height:25px;
+	width:25px;
+	border-radius:50%;
+	background-color:inherit;
+}*/
+// Custom code goes here..
+
+// Examples of using the icon mixin:
+// @include icon('user');
+
+//.nav-list-item:before{
+//    font-family: "Pictos";
+    /*content: "R";*/
+//    font-size: 1.5em;
+//}
+@import 'app';
