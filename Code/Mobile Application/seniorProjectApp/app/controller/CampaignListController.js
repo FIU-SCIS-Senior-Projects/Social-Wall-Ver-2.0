@@ -7,7 +7,8 @@ Ext.define('FotoZap.controller.CampaignListController', {
     extend: 'Ext.app.Controller',
     requires: ['Ext.MessageBox','FotoZap.model.Campaign'],
 	config: {
-        webAppId:'407D3C8E',
+        webAppId:'1E0F8D69',
+        appSession:null,
         jsondata:null,
         device:null,
         activeCampaign:null,
@@ -37,6 +38,13 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     CampaignSelected:function(list,record,e0pts){
     	this.setActiveCampaign(record.data.title);
+
+        if(this.appSession){
+            this.appSession.sendText("Hi");
+        }
+
+
+
         setTimeout(function(){list.deselect(record);},750);
     },
     ListInit:function(){
@@ -95,11 +103,35 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
+        var that = this;
+        this.getDevice().getWebAppLauncher().launchWebApp('1E0F8D69').success(function (session) {
+            
+        var then = that;
+        then.appSession = session.acquire();
+        //  mysession = session.acquire(); 
 
-        this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
-            Ext.Msg.alert("Alert","web app launch success",Ext.emptyFn);
+          then.appSession.on("disconnect", function () {
+                then.appSession.release();
+                then.appSession = null;
+            });
+
+           /*mysession.on("ready",function(){
+            mysession.sendText("2nd Campaign"); 
+           });*/
+
+          then.appSession .connect().success(function(){
+           // Ext.Msg.alert("Alert","web app session success",Ext.emptyFn);
+          then.appSession .sendText("2nd Campaign"); 
+                
+                }).error(function(error){
+                    Ext.Msg.alert("Alert","web app session errr:"+error.message,Ext.emptyFn);
+            });
+               
+
+
+
         }).error(function (err) {
-            Ext.Msg.alert("Alert","web app launch error:",Ext.emptyFn);
+            Ext.Msg.alert("Alert","web app launch error:" + err.message,Ext.emptyFn);
         });
         
        /* var comand = this.getDevice().getLauncher().launchBrowser('http://wall.fotozap.com/chromecast-receiver');

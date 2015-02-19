@@ -1,0 +1,46 @@
+/* app css stylesheet */
+
+
+h1 {
+   color: #d7ceb2;
+	color: #fff;
+	text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+	font: 80px 'ChunkFiveRegular';
+        text-align: center;
+}
+body {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 20%;
+  margin-left: 20%;
+  background-color: lightblue;
+}
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}

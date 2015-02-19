@@ -44,7 +44,7 @@ Ext.define('FotoZap.controller.Main', {
 			/*
 	 		setTimeout(function(){
 			Ext.Viewport.setMasked(false);
-			Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.CampaignList'));
+			Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.CampaignPage'));
 	 		}, 1000);*/
 	 }, 
 	 errorResponse:function(response){
