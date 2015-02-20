@@ -8,7 +8,8 @@
             $scope.source = 'RSSFeed';
             $scope.URL = "http://tinyurl.com/nynogx3";
             $scope.message = '';
-             
+            
+             window.connectManager = new connectsdk.ConnectManager();
             fotoZapFactory.parseFotoZapPhotos('snoel006@fiu.edu','fotozap','3207').then(function(res){
                 var campaignid = res.data.id;
                 var slides = [];
@@ -44,7 +45,8 @@
                         window.connectManager.sendMessage(from, "I got your message :-)");
                 });
 
-
+            
+            window.connectManager.init();   
 
 
             /*
