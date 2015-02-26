@@ -5,7 +5,7 @@
         .factory('GoogleCastMessageBus', ['MESSAGE_NAMESPACE', function (MESSAGE_NAMESPACE) {
            
             // Initialize the chromecast
-            cast.receiver.logger.setLevelValue(0);
+    /*        cast.receiver.logger.setLevelValue(0);
 
             var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
             console.log('Starting Cast Receiver Manager');
@@ -35,6 +35,6 @@
              //   statusText: 'Application starting...'
             //});
 
-            return castMessageBus;
+            return castMessageBus;*/
         }]);
 })();

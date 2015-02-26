@@ -1,15 +1,16 @@
 <!doctype html>
 <html>
 <head>
-  <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 	        <meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
   <title>The Social Wall</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="../engine/boostrap.css" rel="stylesheet">
   <link rel="stylesheet" href="../engine/ssc.css">
+<script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js" language="JavaScript" type="text/javascript"></script>
 </head>
 
 <body ng-app="socialWall-receiver">
@@ -33,29 +34,29 @@
     </div>
 
     <!-- Google Cast API -->
-    <script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
-    <script type="text/javascript" src="scripts/connect_bridge.min.js"></script>
+    <!-- <script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script> -->
+	<script src="scripts/connect_bridge.min.js" language="JavaScript" type="text/javascript"></script>    
     
 
     
     
     <!-- build:js(./) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="http://code.createjs.com/preloadjs-0.4.1.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenMax.min.js"></script>
-    <<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <!-- <script src="http://code.createjs.com/preloadjs-0.4.1.min.js"></script> -->
+     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenMax.min.js"></script> 
+    <<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script> 
+    <!-- <script src="../bower_components/angular-route/angular-route.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.min.js"></script>
-    <script src="../bower_components/ng-resource/dist/ng-resource.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+     <script src="../bower_components/ng-resource/dist/ng-resource.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script> 
     <script src="../bower_components/es5-shim/es5-shim.js"></script>
     <script src="../bower_components/json3/lib/json3.js"></script>
     <script src="../engine/ui-bootstrap-tpls-0.11.0.min.js"></script>
     
 
-    <script src="../components/version/version.js"></script>
-    <script src="../components/version/version-directive.js"></script>
-    <script src="../components/version/interpolate-filter.js"></script>
+<!--    <script src="../components/version/version.js"></script> -->
+<!--    <script src="../components/version/version-directive.js"></script> -->
+<!--    <script src="../components/version/interpolate-filter.js"></script> -->
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -71,9 +72,7 @@
     <script src="scripts/factories/queueService.js"></script>
     <script src="scripts/factories/DataFactory.js"></script>
     <script src="scripts/factories/rssService.js"></script>
-    <script src="scripts/factories/fotozapFactory.js"></script>
-    <script src="scripts/factories/connectSDKFactory.js"></script>
-    
+    <script src="scripts/factories/fotozapFactory.js"></script>    
     
     <!-- endbuild -->
 </body>

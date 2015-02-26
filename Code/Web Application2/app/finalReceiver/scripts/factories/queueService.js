@@ -5,7 +5,7 @@
     angular.module('socialWall-receiver')    
      .factory('QueueService', function($rootScope){
         
-    var queue = new createjs.LoadQueue(true);
+    var queue; // new createjs.LoadQueue(true);
 
     function loadManifest(manifest) {
         queue.loadManifest(manifest);

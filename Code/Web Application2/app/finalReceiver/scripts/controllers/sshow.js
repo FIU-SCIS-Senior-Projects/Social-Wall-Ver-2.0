@@ -64,14 +64,18 @@
 
        $scope.$watch(DataService.arePhotosSet, function() {
         console.log(DataService.arePhotosSet());
-            if (DataService.arePhotosSet() == true) {
+          //  if (DataService.arePhotosSet() == true) {
                 
             
                 slides = DataService.getPhotos();
                 //DataService.setphotosSet(true);
-                loadSlides();
+               // loadSlides();
+		$scope.currentIndex = 0;
+		$scope.slides=slides;
+		$scope.loaded = true;
+		$timeout(nextSlide,INTERVAL);
                 //DataService.setphotosSet(false);
-            }
+          //  }
          });
         
         
