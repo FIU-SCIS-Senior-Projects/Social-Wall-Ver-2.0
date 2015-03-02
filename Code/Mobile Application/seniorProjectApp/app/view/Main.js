@@ -1,7 +1,7 @@
 Ext.define('FotoZap.view.Main', {
     extend: 'Ext.Panel',
     xtype: 'main',
-    requires: ['Ext.Img','Ext.field.Text','Ext.Button','Ext.field.Password'],
+    requires: ['Ext.Img','Ext.field.Text','Ext.Button','Ext.field.Password','Ext.field.Toggle'],
     config: {
         cls:'main-panel',
         layout:{
@@ -15,22 +15,36 @@ Ext.define('FotoZap.view.Main', {
                 html: '<img src="resources/images/FotoZapLogoMediumCropedcopy-ConvertImage.png"/>'            
             },{
                 xtype: 'textfield',
-                id: 'email',
+                itemId: 'email',
                 clearIcon:false,
                 cls:'text-field-login',
                 placeHolder:'Username'
             },
             {
-                xtype: 'passwordfield',
-                id: 'password',
+                xtype:'passwordfield',
+                itemId: 'password',
                 cls:'text-field-login',
                 clearIcon:false,
                 placeHolder:'Password'  
-            },{
+            },
+            {
+                xtype:'container',
+                layout: 'hbox',
+                items:[{
+                xtype:'label',
+                id:'rememberlabel',
+                html:'Remember Me'
+                },{
+                xtype: 'togglefield',
+                baseCls:'toggle',
+                id:'remember'      
+                }]
+            },
+            {
                 xtype: 'button',
                 text:'Login',
                 ui:'normal',
-                id:'loginbutton',
+                itemId:'loginbutton',
                 cls:'big-button bigblue'
             }
         ]

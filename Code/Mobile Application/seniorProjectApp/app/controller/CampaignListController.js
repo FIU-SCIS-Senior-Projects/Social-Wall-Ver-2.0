@@ -13,12 +13,13 @@ Ext.define('FotoZap.controller.CampaignListController', {
         device:null,
         activeCampaign:null,
         refs:{
-        	campaignList:{
-                selector:'#theCampaignList',
-                xtype:'campaignlist',
-                autoCreate:true
-            },
-            castButton:'#thecastbutton'
+            logoutButton:'titlebar #logoutbutton',
+        	campaignList:' [itemId="theCampaignList"]',
+                //selctor:'#theCampaignList',
+                //xtype:'campaignlist'
+                
+            
+            castButton:'titlebar #thecastbutton'
         },
         control:{
         	campaignList:{
@@ -30,11 +31,15 @@ Ext.define('FotoZap.controller.CampaignListController', {
         	},
             castButton:{
                 tap:'ConnectToChromecast'
+            },
+            logoutButton:{
+                tap:'LogoutClicked'
             }
         }
     },
     applyJsondata:function(newjsondata,oldjsondata){
-    this.getCampaignList().getStore().setData(newjsondata);
+   // this.getCampaignList().getStore().setData(newjsondata);
+   Ext.getStore('theCampaigns').setData(newjsondata);
     },
     CampaignSelected:function(list,record,e0pts){
     	this.setActiveCampaign(record.data.title);
@@ -42,7 +47,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
         if(this.appSession){
             this.appSession.sendText("Hi");
         }
-
+        //alert("list");
 
 
         setTimeout(function(){list.deselect(record);},750);
@@ -55,6 +60,13 @@ Ext.define('FotoZap.controller.CampaignListController', {
 
             ConnectSDK.discoveryManager.startDiscovery();
         }
+        console.log(this.getCampaignList());
+
+      //  this.getCampaignList().on('select', function() {
+       //     alert('selected');
+
+        //});
+
     },
     ConnectSDKAvailable:function(){
         if( typeof ConnectSDK == 'undefined'){
@@ -145,7 +157,26 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     deviceDisconnected:function(){
       this.getCastButton().setIconCls('icon-cast');  
-    }
+    },
 
+    LogoutClicked:function(){
+       // alert('area');
+       var that = this;
+       Ext.Msg.confirm("Social Wall", "Are you sure you want to Logout?",function(buttonId){
+            if(buttonId === 'yes') {
+        Ext.Viewport.remove(that.getCampaignList(),true);
+        Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
+         Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main')); 
+
+        }
+       });
+
+       //Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
+       //Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main'));
+
+
+
+
+    }
 
 });

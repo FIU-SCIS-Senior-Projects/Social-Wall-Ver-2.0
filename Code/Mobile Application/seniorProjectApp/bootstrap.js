@@ -660,13 +660,16 @@ Ext.ClassManager.addNameAlternateMappings({
   "FotoZap.controller.Cast": [],
   "FotoZap.controller.Main": [],
   "FotoZap.model.Campaign": [],
+  "FotoZap.model.User": [],
   "FotoZap.store.StoreCampaign": [],
+  "FotoZap.store.UsersStore": [],
   "FotoZap.view.CampaignList": [],
   "FotoZap.view.CampaignPage": [],
   "FotoZap.view.Cast": [],
   "FotoZap.view.CastModal": [],
   "FotoZap.view.Main": [],
-  "FotoZap.view.Searching": []
+  "FotoZap.view.Searching": [],
+  "FotoZap.view.dropDownPanel": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1391,17 +1394,24 @@ Ext.ClassManager.addNameAliasMappings({
   "FotoZap.controller.Cast": [],
   "FotoZap.controller.Main": [],
   "FotoZap.model.Campaign": [],
+  "FotoZap.model.User": [],
   "FotoZap.store.StoreCampaign": [],
+  "FotoZap.store.UsersStore": [],
   "FotoZap.view.CampaignList": [
     "widget.campaignlist"
   ],
-  "FotoZap.view.CampaignPage": [],
+  "FotoZap.view.CampaignPage": [
+    "widget.campaignpage"
+  ],
   "FotoZap.view.Cast": [],
   "FotoZap.view.CastModal": [],
   "FotoZap.view.Main": [
     "widget.main"
   ],
-  "FotoZap.view.Searching": []
+  "FotoZap.view.Searching": [],
+  "FotoZap.view.dropDownPanel": [
+    "widget.dropdownpanel"
+  ]
 });
 
 

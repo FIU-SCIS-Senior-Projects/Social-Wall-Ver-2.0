@@ -3,8 +3,8 @@
  * @extends extendsClass
  * Description
  */
- Ext.require(['FotoZap.store.StoreCampaign']);
- var store = Ext.create('FotoZap.store.StoreCampaign');
+ //Ext.require(['FotoZap.store.StoreCampaign']);
+ //var store = Ext.create('FotoZap.store.StoreCampaign');
  //store.add({id:'hello',title:'boss'});
 
 Ext.define('FotoZap.view.CampaignList', {
@@ -12,9 +12,14 @@ Ext.define('FotoZap.view.CampaignList', {
     require:['FotoZap.store.StoreCampaign'],
     xtype:'campaignlist',
     config: {
-        id:'theCampaignList',
+        itemId:'theCampaignList',
        	cls:'expanded-list',
-        store:store,
-        itemTpl: ['{title}']
+        store:'theCampaigns',
+        itemTpl: ['{title}'],
+        listeners:{
+        	initialize:function(){
+        		FotoZap.app.getController('CampaignListController').ListInit();
+        	}
+        }
     }
 });
