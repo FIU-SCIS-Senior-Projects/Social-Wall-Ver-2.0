@@ -6,6 +6,7 @@
 Ext.define('FotoZap.view.CampaignPage', {
     extend: 'Ext.Container',
     requires: ['Ext.TitleBar','Ext.List','Ext.Spacer','FotoZap.view.CampaignList'],
+    xtype:'campaignpage',
     config: {
     	fullscreen:true,
     	layout:'fit',
@@ -14,10 +15,14 @@ Ext.define('FotoZap.view.CampaignPage', {
        		docked:'top',
        		title:'Select A Campaign',
           items:[{
+            iconCls:'action',
+              align: 'left',
+              itemId:'logoutbutton'
+          },{
               iconCls:'icon-cast',
               hidden:true,
               align: 'right',
-              id:'thecastbutton'
+              itemId:'thecastbutton'
           }]
        	},{
        		xtype:'campaignlist'

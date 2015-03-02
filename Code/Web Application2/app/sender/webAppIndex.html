@@ -1,0 +1,99 @@
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Social Wall</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body class ="body" ng-app="socialWall-sender">
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div ng-view></div>
+
+    <h1>The Social Wall</h1>
+
+
+    <div ng-controller="MainCtrl">
+        <form role="form">
+            <div class="form-group">
+                <label class="control-label">Source</label>
+                <select class="form-control" ng-model="source">
+                    <option value="RSS">RSS Feed</option>
+                    <option value="fbpage">Facebook Page</option>
+                    <option value="fbuser">Facebook User</option>
+                    <option value="dropbox">Dropbox</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">URL</label>
+                <input type="text" class="form-control" name = "url" ng-model="URL" required/>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label">Animation</label>
+                <select class="form-control" ng-model="animation">
+                    <option value="Fade">Fade</option>
+                    <option value="leftin">Left-in</option>
+                    <option value="topdown">Top Down</option>
+                </select>
+            </div>
+            
+            
+            <div class="form-group">
+                <label class="control-label">Transition Speed</label>
+                <select class="form-control" ng-model="transitionSpeed">
+                    <option value="3">3 Seconds</option>
+                    <option value="4">4 Seconds</option>
+                    <option value="5">5 Seconds</option>
+                    <option value="6">6 Seconds</option>
+                    <option value="6">7 Seconds</option>
+                    <option value="6">8 Seconds</option>
+                    <option value="6">9 Seconds</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label">Background Image (optional, insert image URL)</label>
+                <input type="text" class="form-control" name = "bgImage" ng-model="bgImg"/>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label">Background Music (optional, insert YouTube URL)</label>
+                <input type="text" class="form-control" name = "bgMusic" ng-model="bgMusic"/>
+            </div>
+            
+            
+        </form>
+        
+        <button type="button" class="btn btn-success btn-block" ng-click="sendToCast();" ng-disabled="disabled">Generate Slideshow</button>
+        
+    </div>
+
+  <script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+
+  
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/es5-shim/es5-shim.js"></script>
+  <script src="../bower_components/json3/lib/json3.js"></script>
+  <script src="../components/version/version.js"></script>
+  <script src="../components/version/version-directive.js"></script>
+  <script src="../components/version/interpolate-filter.js"></script>
+  
+  <script src="../shared/scripts/sharedApp.js"></script>
+  <script src="../shared/scripts/controllers/header.js"></script>
+  <script src="../shared/scripts/directives/heading.js"></script>
+  <script src="scripts/senderApp.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/factories/googlecastsession.js"></script>
+  <script src="scripts/directives/testsender.js"></script>
+</body>
+</html>

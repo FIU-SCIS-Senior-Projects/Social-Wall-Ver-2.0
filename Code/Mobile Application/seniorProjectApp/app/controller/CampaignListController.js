@@ -7,17 +7,19 @@ Ext.define('FotoZap.controller.CampaignListController', {
     extend: 'Ext.app.Controller',
     requires: ['Ext.MessageBox','FotoZap.model.Campaign'],
 	config: {
-        webAppId:'407D3C8E',
+        webAppId:'1E0F8D69',
+        appSession:null,
         jsondata:null,
         device:null,
         activeCampaign:null,
         refs:{
-        	campaignList:{
-                selector:'#theCampaignList',
-                xtype:'campaignlist',
-                autoCreate:true
-            },
-            castButton:'#thecastbutton'
+            logoutButton:'titlebar #logoutbutton',
+        	campaignList:' [itemId="theCampaignList"]',
+                //selctor:'#theCampaignList',
+                //xtype:'campaignlist'
+                
+            
+            castButton:'titlebar #thecastbutton'
         },
         control:{
         	campaignList:{
@@ -29,14 +31,25 @@ Ext.define('FotoZap.controller.CampaignListController', {
         	},
             castButton:{
                 tap:'ConnectToChromecast'
+            },
+            logoutButton:{
+                tap:'LogoutClicked'
             }
         }
     },
     applyJsondata:function(newjsondata,oldjsondata){
-    this.getCampaignList().getStore().setData(newjsondata);
+   // this.getCampaignList().getStore().setData(newjsondata);
+   Ext.getStore('theCampaigns').setData(newjsondata);
     },
     CampaignSelected:function(list,record,e0pts){
     	this.setActiveCampaign(record.data.title);
+
+        if(this.appSession){
+            this.appSession.sendText("Hi");
+        }
+        //alert("list");
+
+
         setTimeout(function(){list.deselect(record);},750);
     },
     ListInit:function(){
@@ -47,6 +60,13 @@ Ext.define('FotoZap.controller.CampaignListController', {
 
             ConnectSDK.discoveryManager.startDiscovery();
         }
+        console.log(this.getCampaignList());
+
+      //  this.getCampaignList().on('select', function() {
+       //     alert('selected');
+
+        //});
+
     },
     ConnectSDKAvailable:function(){
         if( typeof ConnectSDK == 'undefined'){
@@ -95,11 +115,35 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
+        var that = this;
+        this.getDevice().getWebAppLauncher().launchWebApp('1E0F8D69').success(function (session) {
+            
+        var then = that;
+        then.appSession = session.acquire();
+        //  mysession = session.acquire(); 
 
-        this.getDevice().getWebAppLauncher().launchWebApp('407D3C8E').success(function (session) {
-            Ext.Msg.alert("Alert","web app launch success",Ext.emptyFn);
+          then.appSession.on("disconnect", function () {
+                then.appSession.release();
+                then.appSession = null;
+            });
+
+           /*mysession.on("ready",function(){
+            mysession.sendText("2nd Campaign"); 
+           });*/
+
+          then.appSession .connect().success(function(){
+           // Ext.Msg.alert("Alert","web app session success",Ext.emptyFn);
+          then.appSession .sendText("2nd Campaign"); 
+                
+                }).error(function(error){
+                    Ext.Msg.alert("Alert","web app session errr:"+error.message,Ext.emptyFn);
+            });
+               
+
+
+
         }).error(function (err) {
-            Ext.Msg.alert("Alert","web app launch error:",Ext.emptyFn);
+            Ext.Msg.alert("Alert","web app launch error:" + err.message,Ext.emptyFn);
         });
         
        /* var comand = this.getDevice().getLauncher().launchBrowser('http://wall.fotozap.com/chromecast-receiver');
@@ -113,7 +157,26 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     deviceDisconnected:function(){
       this.getCastButton().setIconCls('icon-cast');  
-    }
+    },
 
+    LogoutClicked:function(){
+       // alert('area');
+       var that = this;
+       Ext.Msg.confirm("Social Wall", "Are you sure you want to Logout?",function(buttonId){
+            if(buttonId === 'yes') {
+        Ext.Viewport.remove(that.getCampaignList(),true);
+        Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
+         Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main')); 
+
+        }
+       });
+
+       //Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
+       //Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main'));
+
+
+
+
+    }
 
 });

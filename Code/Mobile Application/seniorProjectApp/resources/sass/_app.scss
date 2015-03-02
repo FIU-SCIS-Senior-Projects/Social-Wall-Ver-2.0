@@ -40,7 +40,30 @@ $desktop-width : 1024px;
 .icon-cast, #cast-button{
 	float:right !important;
 }
-
+#rememberlabel{
+display: inline-block !important;
+position: relative;
+top: 50%;
+transform: translateY(70%);
+-webkit-transform: -webkit-translateY (70%);
+-ms-transform: translateY(75%);
+-webkit-transform: translateY(75%);
+-moz-transform: translateY(75%);
+-o-transform: translateY(75%);
+transform: translateY(75%);
+}
+.userlabel{
+display:inline-block !important;
+position: relative;
+top: 50%;
+transform: translateY(70%);
+-webkit-transform: -webkit-translateY (70%);
+-ms-transform: translateY(75%);
+-webkit-transform: translateY(75%);
+-moz-transform: translateY(75%);
+-o-transform: translateY(75%);
+transform: translateY(75%);
+}
   
     @media only screen and (max-width:767px) {
 

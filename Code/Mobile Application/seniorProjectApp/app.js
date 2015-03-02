@@ -22,13 +22,16 @@ Ext.application({
         'Main',
         'Cast',
         'CastModal',
-        'CampaignPage'
+        'CampaignPage',
+        'dropDownPanel'
     ],
     models:[
-        'Campaign'
+        'Campaign',
+        'User'
     ],
     stores:[
-        'StoreCampaign'
+        'StoreCampaign',
+        'UsersStore'
     ],
     controllers:['Main','Cast','CampaignListController'],
     icon: {
@@ -52,6 +55,16 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
+        //console.log(Ext.getStore('theUsers'));
+        //var user = Ext.create('FotoZap.model.User',{
+         //   username:'snoel006@fiu.edu',
+        //    password:'fotozap',
+        //    storeId:'theUsers'
+        //});
+    localStorage.setItem("u","snoel006@fiu.edu");
+    localStorage.setItem("p","fotozap");
+       Ext.getStore('theUsers').load();
+        //Ext.getStore('theUsers').sync();
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('FotoZap.view.Main'));
