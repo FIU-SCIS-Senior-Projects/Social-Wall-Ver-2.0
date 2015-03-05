@@ -61,9 +61,9 @@ Ext.application({
         //    password:'fotozap',
         //    storeId:'theUsers'
         //});
-    localStorage.setItem("u","snoel006@fiu.edu");
-    localStorage.setItem("p","fotozap");
-       Ext.getStore('theUsers').load();
+    //localStorage.setItem("u","snoel006@fiu.edu");
+    //localStorage.setItem("p","fotozap");
+       //Ext.getStore('theUsers').load();
         //Ext.getStore('theUsers').sync();
 
         // Initialize the main view

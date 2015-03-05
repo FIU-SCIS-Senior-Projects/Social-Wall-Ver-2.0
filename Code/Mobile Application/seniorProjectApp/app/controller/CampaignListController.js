@@ -60,7 +60,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
 
             ConnectSDK.discoveryManager.startDiscovery();
         }
-        console.log(this.getCampaignList());
+        //console.log(this.getCampaignList());
 
       //  this.getCampaignList().on('select', function() {
        //     alert('selected');
