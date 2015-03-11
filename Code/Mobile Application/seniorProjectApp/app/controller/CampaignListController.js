@@ -10,6 +10,8 @@ Ext.define('FotoZap.controller.CampaignListController', {
         webAppId:'1E0F8D69',
         appSession:null,
         jsondata:null,
+        username:null,
+        password:null,
         device:null,
         activeCampaign:null,
         refs:{
@@ -24,10 +26,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
         control:{
         	campaignList:{
         		select:'CampaignSelected',
-                initialize:'ListInit',
-                applyStore:function(oldstore,newstore){
-                    alert('hahaha');
-                }
+                initialize:'ListInit'
         	},
             castButton:{
                 tap:'ConnectToChromecast'
@@ -44,9 +43,11 @@ Ext.define('FotoZap.controller.CampaignListController', {
     CampaignSelected:function(list,record,e0pts){
     	this.setActiveCampaign(record.data.title);
 
-        if(this.appSession){
-            this.appSession.sendText("Hi");
+        var sending =  this.getUsername() + " "+ this.getPassword() +" "+record.data.id;
+        if(this.appSession != null){
+            this.getAppSession().sendText(sending);
         }
+        console.log(sending);
         //alert("list");
 
 
@@ -76,6 +77,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     DeviceListChange:function(){
         var devices =  ConnectSDK.discoveryManager.getDeviceList();
+       // alert('haha');
         if(devices.length == 0){
             this.getCastButton().hide();
         }else{
@@ -93,19 +95,19 @@ Ext.define('FotoZap.controller.CampaignListController', {
         if(this.ConnectSDKAvailable()){
             var devices = ConnectSDK.discoveryManager.getDeviceList();
             if(devices.length > 0 ){
-                var that = this;
+                //var that = this;
                 if(this.checkActiveCampaign()){
-                   var  thoe = that;
+                   //var  thoe = that;
                     ConnectSDK.discoveryManager.pickDevice().success(function(device){
-                            thoe.setDevice(device);
-                           if(device.isReady()){
-                                thoe.deviceConnected();
+                            this.setDevice(device);
+                           if(this.getDevice().isReady()){
+                                this.deviceConnected();
                             }else{
-                            device.on("ready", thoe.deviceConnected,thoe);
-                            device.connect();
+                            this.getDevice().on("ready", this.deviceConnected,this);
+                            this.getDevice().connect();
                            }
-                           device.on("disconnect", thoe.deviceDisconnected,thoe); 
-                    });
+                           this.getDevice().on("disconnect", this.deviceDisconnected,this); 
+                    },this);
                 }else{
                         Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);
                 }
@@ -115,36 +117,37 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
-        var that = this;
+        // var that = this;
         this.getDevice().getWebAppLauncher().launchWebApp('1E0F8D69').success(function (session) {
             
-        var then = that;
-        then.appSession = session.acquire();
+       
+        this.setAppSession(session.acquire());
         //  mysession = session.acquire(); 
 
-          then.appSession.on("disconnect", function () {
-                then.appSession.release();
-                then.appSession = null;
-            });
+          this.getAppSession().on("disconnect", function () {
+                alert('App session disonnect fireds');
+                this.getAppSession().release();
+                this.setAppSession(null);
+            },this);
 
            /*mysession.on("ready",function(){
             mysession.sendText("2nd Campaign"); 
            });*/
 
-          then.appSession .connect().success(function(){
+          this.getAppSession().connect().success(function(){
            // Ext.Msg.alert("Alert","web app session success",Ext.emptyFn);
-          then.appSession .sendText("2nd Campaign"); 
+          this.getAppSession().sendText("2nd Campaign"); 
                 
-                }).error(function(error){
+                },this).error(function(error){
                     Ext.Msg.alert("Alert","web app session errr:"+error.message,Ext.emptyFn);
-            });
+            },this);
                
 
 
 
-        }).error(function (err) {
+        },this).error(function (err) {
             Ext.Msg.alert("Alert","web app launch error:" + err.message,Ext.emptyFn);
-        });
+        },this);
         
        /* var comand = this.getDevice().getLauncher().launchBrowser('http://wall.fotozap.com/chromecast-receiver');
         
@@ -156,14 +159,43 @@ Ext.define('FotoZap.controller.CampaignListController', {
 
     },
     deviceDisconnected:function(){
+        alert('device disconnect function');
       this.getCastButton().setIconCls('icon-cast');  
-    },
+      if(this.getDevice())
+      {
+        alert('disconnecting device from deviceDisconnected');
+       this.getDevice().off("ready");
+       this.getDevice().off("disconnect");
+       this.setDevice(null);
+      }
+      
 
+    },
     LogoutClicked:function(){
        // alert('area');
        var that = this;
        Ext.Msg.confirm("Social Wall", "Are you sure you want to Logout?",function(buttonId){
             if(buttonId === 'yes') {
+                if(that.getDevice()){
+                    alert('disconnecting device in logout');
+                    alert(that.getDevice());
+                    that.getDevice().disconnect();
+                }
+
+                if(that.getAppSession()){
+                    alert('disconnecting session in logout');
+                    alert(that.getAppSession());
+                    that.getAppSession().off("message");
+                    that.getAppSession().off("disconnect");
+        
+        // Release session to free up memory
+        that.getAppSession().close();
+        that.getAppSession().disconnect();
+        that.getAppSession().release();
+        that.setAppSession(null);
+                }
+            
+        ConnectSDK.discoveryManager.stopDiscovery();
         Ext.Viewport.remove(that.getCampaignList(),true);
         Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
          Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main')); 
@@ -171,12 +203,10 @@ Ext.define('FotoZap.controller.CampaignListController', {
         }
        });
 
-       //Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
-       //Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main'));
-
-
-
-
+    },
+    setCredentials:function(us,pa){
+        this.setUsername(us);
+        this.setPassword(pa);
     }
 
 });

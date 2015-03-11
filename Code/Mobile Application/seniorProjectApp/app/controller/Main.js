@@ -90,6 +90,7 @@ Ext.define('FotoZap.controller.Main', {
 	 		console.log(this.getPasswordField().getValue());
 	 		this.saveUser(this.getEmailField().getValue(),this.getPasswordField().getValue());
 	 	}
+	 	FotoZap.app.getController('CampaignListController').setCredentials(this.getEmailField().getValue(),this.getPasswordField().getValue());
 	 	FotoZap.app.getController('CampaignListController').setJsondata(Ext.decode(response.responseText));
 	 	Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
 	 	Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.CampaignPage'));
@@ -171,5 +172,6 @@ Ext.define('FotoZap.controller.Main', {
 			//list.deselect(record);
 			//list.up('panel').hide();
 	 }
+
     
 });
