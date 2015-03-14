@@ -40,7 +40,9 @@ function swcarousels(element,options){
 swcarousels.prototype.changeImages = function(newimagesobject){
 	this.stopAnimating();
 	this.clearCanvas();
+	console.log(this.options.images);
 	this.options.images = newimagesobject;
+	console.log(this.options.images);
 	this.state.resetState();
 	var that = this;
 	this.state.preloadImages(function(images){
@@ -284,7 +286,7 @@ this.animationFunction.scroll = function(options, state, canvasBuffer) {
 	//} else {
 		//console.log(state);
 		//if(state.nextFrame() == 1){
-		console.log(state.nextFrame());
+	//	console.log(state.nextFrame());
 		canvasBuffer.context.drawImage(state.sourceImage(), -x, 0, canvasBuffer.width, canvasBuffer.height);
 	//	}
 		canvasBuffer.context.drawImage(state.targetImage(), canvasBuffer.width - x, 0, canvasBuffer.width, canvasBuffer.height);
@@ -409,7 +411,7 @@ swcarousels.prototype.setUpState = function(){
 	this.state.preloadImages = function(callback){
 		var loadedImages = 0;
 		var ret = [];
-		console.log(that.options['images']);
+		console.log(that.options.images);
 		var images = that.options['images'];
 		console.log(images);
 		

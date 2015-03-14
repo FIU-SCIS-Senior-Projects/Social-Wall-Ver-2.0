@@ -6,7 +6,7 @@
 	angular.module('social-wall-receiverApp')
 	.controller('carouselController', ['$scope', 'dataService',function($scope,dataService){
 		
-	$scope.animation	
+		
 	$scope.currentAnimation = 'scroll';
 	$scope.isCurrentAnimation = function(aninm){
 		return aninm === $scope.currentAnimation;
@@ -49,6 +49,7 @@
 		if(images.length > 0){
 			$scope.carouselDefaults.images = images;
 			if($scope.carouselObject){
+				console.log(images);
 				$scope.chageImages(images);
 			}else{
 			$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);		
