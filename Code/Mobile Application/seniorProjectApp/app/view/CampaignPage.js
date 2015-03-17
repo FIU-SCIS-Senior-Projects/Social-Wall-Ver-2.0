@@ -13,17 +13,28 @@ Ext.define('FotoZap.view.CampaignPage', {
        	items:[{
        		xtype:'titlebar',
        		docked:'top',
+          centered:true,
        		title:'Select A Campaign',
           items:[{
             iconCls:'action',
-              align: 'left',
-              itemId:'logoutbutton'
+            align:'left',
+            itemId:'logoutbutton'
           },{
               iconCls:'icon-cast',
+              align:'right',
               hidden:true,
-              align: 'right',
               itemId:'thecastbutton'
-          }]
+          }//,{
+            //  iconCls:'home',
+             // align:'right',
+              //itemId:'thedisconnectModal',
+              //handler:function(){
+               //   var modal  = Ext.create('FotoZap.view.disconnectChromecast');
+                //  Ext.Viewport.add(modal);
+                 // modal.show();
+              //}
+          //}
+          ]
        	},{
        		xtype:'campaignlist'
        	/*	data: [

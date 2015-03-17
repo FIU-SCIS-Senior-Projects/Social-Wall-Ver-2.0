@@ -32,7 +32,8 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSet": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLResultSetRowList": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
-  "FotoZap": "app"
+  "FotoZap": "app",
+  "FotoZap.view.disconnectChromecast": "app/view/disconnectChromcecast.js"
 });
 
 Ext.ClassManager.addNameAlternateMappings({
@@ -669,6 +670,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "FotoZap.view.CastModal": [],
   "FotoZap.view.Main": [],
   "FotoZap.view.Searching": [],
+  "FotoZap.view.disconnectChromecast": [],
   "FotoZap.view.dropDownPanel": []
 });
 
@@ -1409,6 +1411,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.main"
   ],
   "FotoZap.view.Searching": [],
+  "FotoZap.view.disconnectChromecast": [],
   "FotoZap.view.dropDownPanel": [
     "widget.dropdownpanel"
   ]
