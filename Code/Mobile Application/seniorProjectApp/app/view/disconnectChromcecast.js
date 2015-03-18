@@ -6,7 +6,7 @@
 Ext.define('FotoZap.view.disconnectChromecast', {
     extend: 'Ext.Panel',
     requires:['Ext.Label','Ext.Button','Ext.Toolbar'],
-
+    xtype:'disconnectModal',
     config: {
         modal:true,
        layout:'fit',
@@ -30,10 +30,12 @@ Ext.define('FotoZap.view.disconnectChromecast', {
                 title:' Connected to Chromecast8580',
                 items:[{
                     iconCls:'icon-cast',
+                    disabled:true,
                     align:'left'
                 }]
             },{
                 xtype:'button',
+                itemId:'disconnectChrome',
                 ui:'plain',
                 width:'100%',
                 height:'30px',

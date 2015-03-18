@@ -1411,7 +1411,9 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.main"
   ],
   "FotoZap.view.Searching": [],
-  "FotoZap.view.disconnectChromecast": [],
+  "FotoZap.view.disconnectChromecast": [
+    "widget.disconnectModal"
+  ],
   "FotoZap.view.dropDownPanel": [
     "widget.dropdownpanel"
   ]

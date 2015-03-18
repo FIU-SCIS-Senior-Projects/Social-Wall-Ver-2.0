@@ -17,9 +17,14 @@ Ext.define('FotoZap.controller.CampaignListController', {
         refs:{
             logoutButton:'titlebar #logoutbutton',
         	campaignList:'[itemId="theCampaignList"]',
-            castButton:'titlebar #thecastbutton'
+            castButton:'titlebar #thecastbutton',
+            disconnectButton:'[itemId="disconnectChrome"]',
+            discoModal:'disconnectModal'
         },
         control:{
+            disconnectButton:{
+                tap:'disconnectPressed'
+            },  
         	campaignList:{
         		select:'CampaignSelected',
                 initialize:'ListInit'
@@ -30,6 +35,14 @@ Ext.define('FotoZap.controller.CampaignListController', {
             logoutButton:{
                 tap:'LogoutClicked'
             }
+        }
+    },
+    disconnectPressed:function(){
+        if(this.getDevice()){
+            //this.cleanUpSession();
+            //this.appSession = null;
+            this.cleanUpDevice();
+            this.getDiscoModal().hide();
         }
     },
     applyJsondata:function(newjsondata,oldjsondata){
@@ -71,6 +84,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     clearAppSession:function(){
         this.appSession = null;
+        //Ext.Msg.alert('Social Wall','Clearing the app Session.',Ext.emptyFn);
     },
     ConnectSDKAvailable:function(){
         if( typeof ConnectSDK == 'undefined'){
@@ -99,7 +113,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
             var devices = ConnectSDK.discoveryManager.getDeviceList();
             if(devices.length > 0 ){
                 //var that = this;
-                if(this.checkActiveCampaign()){
+                if(this.checkActiveCampaign() && !this.getDevice()){
                    //var  thoe = that;
                     ConnectSDK.discoveryManager.pickDevice().success(function(device){
                             this.setDevice(device);
@@ -112,7 +126,15 @@ Ext.define('FotoZap.controller.CampaignListController', {
                            this.getDevice().on("disconnect", this.deviceDisconnected,this); 
                     },this);
                 }else{
-                        Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);
+                    if(!this.checkActiveCampaign()){
+                        Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);          
+                    }
+                    else{
+                        var modal = Ext.create('FotoZap.view.disconnectChromecast');
+                        Ext.Viewport.add(modal);
+                        modal.down('toolbar').setTitle(this.getDevice().getFriendlyName());
+                        modal.show();
+                    }    
                 }
                 
             }
@@ -127,27 +149,38 @@ Ext.define('FotoZap.controller.CampaignListController', {
             //}).error(function(error){
             //Ext.Msg.alert("Alert","web app close error " + err.message,Ext.emptyFn);
            // });
+            this.getCastButton().setIconCls('icon-cast');  
            this.getDevice().disconnect();
             this.setDevice(null);   
         }
     },
-    cleanUpSession:function(){
+    cleanUpSession:function(callback){
         if(this.getAppSession()){
                 this.getAppSession().off("message");
                 this.getAppSession().off("disconnect");
 
-               // this.getAppSession().disconnect();
+                //this.getAppSession().disconnect();
+               // var that = this;
                 this.getAppSession().close().success(function(){
                 //Ext.Msg.alert("Alert","Succesfully closed Web App",Ext.emptyFn);
-                this.getAppSession().disconnect();
-                this.getAppSession().release();
+                //that.getAppSession().disconnect().success(function(){
+                 //   Ext.Msg.alert("Alert","Succesfully disconnected Web App",Ext.emptyFn);
+                //that.getAppSession().release();
+                //that.clearAppSession();
+                //}).error(function(error){
+                //    Ext.Msg.alert("Alert","Error disconnecting Web App" + error.message ,Ext.emptyFn);
+                //    that.getAppSession().release();
+                //that.clearAppSession();
+                //});
+                //this.getAppSession().release();
                 this.clearAppSession();
-                }).error(function(error){
-                //    Ext.Msg.alert("Alert","Error closed Web App" + error.message,Ext.emptyFn);
-                this.getAppSession().disconnect();
-                this.getAppSession().release();
+                
+                },this).error(function(error){
+                    Ext.Msg.alert("Alert","Error closed Web App" + error.message,Ext.emptyFn);
+                //this.getAppSession().disconnect();
+                //this.getAppSession().release();
                 this.clearAppSession();
-                });
+                },this);
                 
                 //this.getAppSession().disconnect();
                 //this.getAppSession().release();
@@ -162,6 +195,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
         this.getDevice().getWebAppLauncher().launchWebApp('1E0F8D69').success(function (session) {
             //alert('we got into the web app launch');
         Ext.Msg.alert("Alert","We got into the Web App Launch",Ext.emptyFn);
+        //var sesh = session.acquire();
         this.setAppSession(session.acquire());
         //  mysession = session.acquire(); 
 
@@ -170,13 +204,15 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 this.getAppSession().off("message");
                 this.getAppSession().off("disconnect");
 
-                
-                this.getAppSession().close().success(function(){
-                    Ext.Msg.alert("Alert","App Session Disconnect closed",Ext.emptyFn);
-                },this).error(function(error){
-                     Ext.Msg.alert("Alert","App Session Disconnect error "+error.message,Ext.emptyFn);
-                },this);
-                this.getAppSession().disconnect();
+                //var session = this.getAppSession();
+                //this.setAppSession(null);
+
+                //this.getAppSession().close().success(function(){
+                 //   Ext.Msg.alert("Alert","App Session Disconnect closed",Ext.emptyFn);
+                //},this).error(function(error){
+                 //    Ext.Msg.alert("Alert","App Session Disconnect error "+error.message,Ext.emptyFn);
+                //},this);
+                //session.disconnect();
                 this.getAppSession().release();
                 this.setAppSession(null);
             },this);
@@ -222,15 +258,15 @@ Ext.define('FotoZap.controller.CampaignListController', {
        // alert('area');
        var that = this;
        Ext.Msg.confirm("Social Wall", "Are you sure you want to Logout?",function(buttonId){
-        if(buttonId === 'yes') {
-                
+        if(buttonId === 'yes') {         
         if(that.ConnectSDKAvailable()){
             ConnectSDK.discoveryManager.stopDiscovery();
         }    
         Ext.Viewport.remove(that.getCampaignList(),true);
         Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
         Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main')); 
-        that.cleanUpSession().bind(that);
+        //that.cleanUpSession().bind(that);
+        that.cleanUpDevice().bind(that);
                 
         
     }
