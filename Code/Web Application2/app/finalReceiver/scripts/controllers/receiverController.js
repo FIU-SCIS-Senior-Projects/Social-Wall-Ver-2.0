@@ -18,7 +18,7 @@
 
        document.getElementById('main').innerHTML +='Im ready to cast ';	
       });
-			//var fz = fotoZapService;
+			var fotozapservice = fotoZapService;
 			var dataservice = dataService;
  			window.connectManager.on('message', function(data) {
 		
@@ -40,11 +40,11 @@
                     var pass = messagearray[1];
                     var campaignid = messagearray[2];
                    
-                    var fotozapservice = fotoZapService;
-		                var dataservice = dataService;
+                    //var fotozapservice = fotoZapService;
+		                //var dataservice = dataService;
                     // window.connectManager.sendMessage(from, {message:"I got your JSON message :-)"});
                     //username,password,endpoint
-			fotoZapService.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
+			fotozapservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 					  var arrayOfsrc =  fotozapservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
 				    dataservice.setPhotos(arrayOfsrc);
