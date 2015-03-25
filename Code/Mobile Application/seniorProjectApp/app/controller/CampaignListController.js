@@ -108,28 +108,37 @@ Ext.define('FotoZap.controller.CampaignListController', {
         }
         return true;
     },
+    devicesDetected:function(){
+        var devices = ConnectSDK.discoveryManager.getDeviceList();
+        return devices.length > 0  true : false; 
+    },
+    devicePickedSuccessful:function(device){
+            this.setDevice(device);
+            if(this.getDevice().isReady()){
+                this.deviceConnected();
+              }else{
+                this.getDevice().on("ready", this.deviceConnected,this);
+                this.getDevice().connect();
+                }
+            this.getDevice().on("disconnect", this.deviceDisconnected,this);
+    },
     ConnectToChromecast:function(){
+        //If the ConnectSDK variable is defined
         if(this.ConnectSDKAvailable()){
-            var devices = ConnectSDK.discoveryManager.getDeviceList();
-            if(devices.length > 0 ){
+            //If their are devices detected
+            if(this.devicesDetected()){
                 //var that = this;
+                //If there is an active campaign and their is not a device already connected
                 if(this.checkActiveCampaign() && !this.getDevice()){
                    //var  thoe = that;
-                    ConnectSDK.discoveryManager.pickDevice().success(function(device){
-                            this.setDevice(device);
-                           if(this.getDevice().isReady()){
-                                this.deviceConnected();
-                            }else{
-                            this.getDevice().on("ready", this.deviceConnected,this);
-                            this.getDevice().connect();
-                           }
-                           this.getDevice().on("disconnect", this.deviceDisconnected,this); 
-                    },this);
+                    ConnectSDK.discoveryManager.pickDevice().success(this.devicePickedSuccessful,this);
                 }else{
+                    //If there is not an active campaign
                     if(!this.checkActiveCampaign()){
                         Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);          
                     }
                     else{
+                        //show the disconnect modal
                         var modal = Ext.create('FotoZap.view.disconnectChromecast');
                         Ext.Viewport.add(modal);
                         modal.down('toolbar').setTitle(this.getDevice().getFriendlyName());
@@ -149,7 +158,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
             //}).error(function(error){
             //Ext.Msg.alert("Alert","web app close error " + err.message,Ext.emptyFn);
            // });
-            this.getCastButton().setIconCls('icon-cast');  
+           this.getCastButton().setIconCls('icon-cast');  
            this.getDevice().disconnect();
             this.setDevice(null);   
         }

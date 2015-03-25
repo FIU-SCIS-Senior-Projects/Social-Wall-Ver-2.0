@@ -39,6 +39,7 @@
                     var user = messagearray[0];
                     var pass = messagearray[1];
                     var campaignid = messagearray[2];
+                   
                     var fotozapservice = fotoZapService;
 		                var dataservice = dataService;
                     // window.connectManager.sendMessage(from, {message:"I got your JSON message :-)"});
@@ -46,8 +47,8 @@
 			fotoZapService.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 					  var arrayOfsrc =  fotozapservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
-				    dh.setPhotos(arrayOfsrc);
-					  dh.setModDate(new Date());
+				    dataservice.setPhotos(arrayOfsrc);
+					  dataservice.setModDate(new Date());
 		
                    });
 
