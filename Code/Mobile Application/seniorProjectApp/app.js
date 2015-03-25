@@ -23,7 +23,8 @@ Ext.application({
         'Cast',
         'CastModal',
         'CampaignPage',
-        'dropDownPanel'
+        'dropDownPanel',
+        'disconnectChromecast'
     ],
     models:[
         'Campaign',

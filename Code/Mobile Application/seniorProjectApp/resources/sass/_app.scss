@@ -64,7 +64,14 @@ transform: translateY(70%);
 -o-transform: translateY(75%);
 transform: translateY(75%);
 }
-  
+
+.disconnectModal{
+	width:200px;
+	height:200px;
+}
+.disconnectModal .x-title{
+	color:#157efb !important;
+}
     @media only screen and (max-width:767px) {
 
 	  .big-button.bigblue{
