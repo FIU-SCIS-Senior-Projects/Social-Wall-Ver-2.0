@@ -40,15 +40,15 @@
                     var pass = messagearray[1];
                     var campaignid = messagearray[2];
                    
-                    //var fotozapservice = fotoZapService;
-		                //var dataservice = dataService;
+                    var fservice = fotozapservice;
+		                var dservice = dataservice;
                     // window.connectManager.sendMessage(from, {message:"I got your JSON message :-)"});
                     //username,password,endpoint
 			fotozapservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
-					  var arrayOfsrc =  fotozapservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
+					  var arrayOfsrc =  fservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
-				    dataservice.setPhotos(arrayOfsrc);
-					  dataservice.setModDate(new Date());
+				    dservice.setPhotos(arrayOfsrc);
+					  dservice.setModDate(new Date());
 		
                    });
 
