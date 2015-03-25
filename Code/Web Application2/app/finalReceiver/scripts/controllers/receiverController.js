@@ -10,19 +10,18 @@
 
   			window.connectManager.on('join',function(){
 
-			//	alert("someone joined");
+			
 				document.getElementById('main').innerHTML +='SOMEONE LOGGED IN '; 
 			});
 
         window.connectManager.on('ready',function(){
 
-       // alert("we are ready");
-	document.getElementById('main').innerHTML +='Im ready to cast ';	
+       document.getElementById('main').innerHTML +='Im ready to cast ';	
       });
-			var fz = fotoZapService;
-			var ds = dataService;
+			//var fz = fotoZapService;
+			var dataservice = dataService;
  			window.connectManager.on('message', function(data) {
-		//	document.getElementById('main').innerHTML +='JUST GOT A MESSAGE';
+		
 		    var from = data.from;
                     var message = data.message;
                     var messageString;
@@ -40,14 +39,14 @@
                     var user = messagearray[0];
                     var pass = messagearray[1];
                     var campaignid = messagearray[2];
-                    var fs = fz;
-		   var dh = ds;
-                  // window.connectManager.sendMessage(from, {message:"I got your JSON message :-)"});
+                    var fotozapservice = fotoZapService;
+		                var dataservice = dataService;
+                    // window.connectManager.sendMessage(from, {message:"I got your JSON message :-)"});
                     //username,password,endpoint
-			fs.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
-					  var arrayOfsrc =  fs.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
+			fotoZapService.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
+					  var arrayOfsrc =  fotozapservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
-				  dh.setPhotos(arrayOfsrc);
+				    dh.setPhotos(arrayOfsrc);
 					  dh.setModDate(new Date());
 		
                    });
