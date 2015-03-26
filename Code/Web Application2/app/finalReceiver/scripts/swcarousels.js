@@ -276,6 +276,12 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 	canvasBuffer.context.drawImage(canvasBuffer.scratchCanvas, 0,0, canvasBuffer.width, canvasBuffer.height);
 	
 };
+this.animationFunction.hardcut = function(options,state,canvasBuffer){
+	if(state.i == 1){
+		//canvasBuffer.scratch.clearRect(0,0,canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.targetImage(), 0,0, canvasBuffer.width, canvasBuffer.height);		
+	}
+};
 
 this.animationFunction.scroll = function(options, state, canvasBuffer) {
 	var x = state.progress * options.width/100.0;
