@@ -8,6 +8,7 @@
 
 // Examples of using the icon mixin:
 // @include icon('user');
+@include icon('check2');
 
 $phone-width : 767px;
 $tablet-width : 768px;
@@ -16,7 +17,18 @@ $desktop-width : 1024px;
 //.x-navigation-bar.x-docked-top , .screen-top.x-docked-top{
 //  padding-top: 20px !important;
 //}
-
+.unhide{
+	display:block !important;
+}
+.plus{
+	 position: absolute;
+     right: 10px;
+     top: 15px;
+     z-index: -1;
+     width:auto;
+     border:0;
+     display:none;
+}
 .main-panel{
 	background-color:#92cbf8;;
 }

@@ -45,6 +45,36 @@ Ext.define('FotoZap.controller.CampaignListController', {
             this.getDiscoModal().hide();
         }
     },
+    hideActiveCampaignViews:function(campaignViewSelector,showCls){
+        var htmlElements = Ext.select(campaignViewSelector);
+        //console.log(htmlElements);
+        if(htmlElements){
+            for (var i = 0; i < htmlElements.elements.length; i++) {
+                var el = htmlElements.elements[i];
+                var indexofCls = el.className.indexOf(showCls);
+                if(indexofCls > -1){
+                    el.className = el.className.slice(0,indexofCls);
+                  console.log(el);
+                }
+            };
+        }
+    },
+    toggleActiveCampaignView:function(parent,classNameToAdd,classIdentifier){
+        if(parent){
+          var activeView =  parent.down(classIdentifier,[true]);
+            console.log(activeView);
+            
+            if(activeView){
+                var place = activeView.className.indexOf(classNameToAdd);
+               if(place > -1){
+                return;
+               }else{
+                    activeView.className += classNameToAdd;
+               }
+            }
+        }
+    },
+
     applyJsondata:function(newjsondata,oldjsondata){
    
    Ext.getStore('theCampaigns').setData(newjsondata);
@@ -58,14 +88,19 @@ Ext.define('FotoZap.controller.CampaignListController', {
            Ext.Msg.alert('Social Wall','You sent a message',Ext.emptyFn);
             this.getAppSession().sendText(sending);
         }
+        var button = Ext.create('Ext.Button',{
+            iconCls:'check2',
+            width:'50px',
+            height:'50px'
+        });
         
-
+        var selectedItem = list.getItemAt(list.getStore().indexOf(record));
       
-
-
         setTimeout(function(){
             list.deselect(record);
-        },750);
+            this.hideActiveCampaignViews('.plus',' unhide');
+            this.toggleActiveCampaignView(selectedItem.element,' unhide','.plus');
+        }.bind(this),750);
     },
     ListInit:function(){
         if(!this.ConnectSDKAvailable()){
