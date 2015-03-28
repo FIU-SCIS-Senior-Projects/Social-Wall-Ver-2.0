@@ -533,6 +533,17 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.layout.wrapper.BoxDock": [],
   "Ext.layout.wrapper.Dock": [],
   "Ext.layout.wrapper.Inner": [],
+  "Ext.log.Base": [],
+  "Ext.log.Logger": [],
+  "Ext.log.filter.Filter": [],
+  "Ext.log.filter.Priority": [],
+  "Ext.log.formatter.Default": [],
+  "Ext.log.formatter.Formatter": [],
+  "Ext.log.formatter.Identity": [],
+  "Ext.log.writer.Console": [],
+  "Ext.log.writer.DocumentTitle": [],
+  "Ext.log.writer.Remote": [],
+  "Ext.log.writer.Writer": [],
   "Ext.mixin.Bindable": [],
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
@@ -672,7 +683,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "FotoZap.view.Searching": [],
   "FotoZap.view.customListItem": [],
   "FotoZap.view.disconnectChromecast": [],
-  "FotoZap.view.dropDownPanel": []
+  "FotoZap.view.dropDownPanel": [],
+  "FotoZap.view.playPauseView": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1253,6 +1265,17 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.layout.wrapper.BoxDock": [],
   "Ext.layout.wrapper.Dock": [],
   "Ext.layout.wrapper.Inner": [],
+  "Ext.log.Base": [],
+  "Ext.log.Logger": [],
+  "Ext.log.filter.Filter": [],
+  "Ext.log.filter.Priority": [],
+  "Ext.log.formatter.Default": [],
+  "Ext.log.formatter.Formatter": [],
+  "Ext.log.formatter.Identity": [],
+  "Ext.log.writer.Console": [],
+  "Ext.log.writer.DocumentTitle": [],
+  "Ext.log.writer.Remote": [],
+  "Ext.log.writer.Writer": [],
   "Ext.mixin.Bindable": [],
   "Ext.mixin.Filterable": [],
   "Ext.mixin.Mixin": [],
@@ -1420,6 +1443,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "FotoZap.view.dropDownPanel": [
     "widget.dropdownpanel"
+  ],
+  "FotoZap.view.playPauseView": [
+    "widget.playpausebar"
   ]
 });
 

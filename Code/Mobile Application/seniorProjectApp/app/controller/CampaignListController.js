@@ -8,6 +8,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
     requires: ['Ext.MessageBox','FotoZap.model.Campaign'],
 	config: {
         webAppId:'1E0F8D69',
+        playing:true,
         appSession:null,
         jsondata:null,
         username:null,
@@ -19,9 +20,15 @@ Ext.define('FotoZap.controller.CampaignListController', {
         	campaignList:'[itemId="theCampaignList"]',
             castButton:'titlebar #thecastbutton',
             disconnectButton:'[itemId="disconnectChrome"]',
-            discoModal:'disconnectModal'
+            discoModal:'disconnectModal',
+            campaignPage:'campaignpage',
+            playpausePage:'playpausebar',
+            playpauseButton:'[itemId="playpause"]'
         },
         control:{
+            playpauseButton:{
+                tap:'playPausePressed'
+            },
             disconnectButton:{
                 tap:'disconnectPressed'
             },  
@@ -35,6 +42,48 @@ Ext.define('FotoZap.controller.CampaignListController', {
             logoutButton:{
                 tap:'LogoutClicked'
             }
+        }
+    },
+    applyPlaying:function(newPlay,oldPlay){
+        this.playing = newPlay;
+    },
+    playPausePressed:function(){
+        if(this.getAppSession()){
+          console.log(this.playing);
+           
+            if(this.playing){
+                var message = {
+                    type:'pause'
+                };
+                if(this.getAppSession()){
+                    this.getAppSession().sendJSON(message);
+                }
+                this.playing=false;
+                this.getPlaypauseButton().setIconCls('play');
+            
+            }else{
+                var message = {
+                    type:'play'
+                };
+                if(this.getAppSession()){
+                this.getAppSession().sendJSON(message);
+                }
+                this.playing=true;
+                this.getPlaypauseButton().setIconCls('pause');
+            }
+
+
+        }
+    },
+    hideplayPause:function(){
+        if(!this.playing){
+            this.playing = true;
+        }
+        this.getCampaignPage().remove(this.getPlaypausePage());
+    },
+    showplayPause:function(){
+        if(!this.getCampaignPage().down('playpausebar')){
+            this.getCampaignPage().add(Ext.create('FotoZap.view.playPauseView'));
         }
     },
     disconnectPressed:function(){
@@ -84,16 +133,20 @@ Ext.define('FotoZap.controller.CampaignListController', {
 
         var sending =  this.getUsername() + " "+ this.getPassword() +" "+record.data.id;
         if(this.getAppSession()){
-            alert(this.getAppSession());
+            //alert(this.getAppSession());
            Ext.Msg.alert('Social Wall','You sent a message',Ext.emptyFn);
-            this.getAppSession().sendText(sending);
+           var message = {
+                type:'campaignseleted',
+                data:sending
+           };
+            this.getAppSession().sendJSON(message);
         }
-        var button = Ext.create('Ext.Button',{
-            iconCls:'check2',
-            width:'50px',
-            height:'50px'
-        });
-        
+        //var button = Ext.create('Ext.Button',{
+         //   iconCls:'check2',
+          //  width:'50px',
+         //   height:'50px'
+        //});
+        this.showplayPause();
         var selectedItem = list.getItemAt(list.getStore().indexOf(record));
       
         setTimeout(function(){
@@ -107,10 +160,8 @@ Ext.define('FotoZap.controller.CampaignListController', {
             console.log('ConnectSDK not available');
         }else{
             ConnectSDK.discoveryManager.on('devicelistchanged',this.DeviceListChange,this);
-
             ConnectSDK.discoveryManager.startDiscovery();
         }
-       
 
     },
     clearAppSession:function(){

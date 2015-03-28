@@ -30,7 +30,7 @@ Ext.define('FotoZap.view.CampaignList', {
 
 
 
-                FotoZap.app.getController('CampaignListController').ListInit();
+               // FotoZap.app.getController('CampaignListController').ListInit();
         	}
             
     }

@@ -12,10 +12,14 @@
 		return aninm === $scope.currentAnimation;
 	}
 	$scope.stopCarousel = function(){
-		$scope.carouselObject.stopCarousel();
+		if($scope.carouselObject){
+			$scope.carouselObject.stopCarousel();
+		}
 	}
 	$scope.startCarousel = function(){
-		$scope.carouselObject.stopAnimating();
+		if($scope.carouselObject){
+			$scope.carouselObject.stopAnimating();
+		}
 	}
 	$scope.stopCarouselAnimation = function(){
 		$scope.carouselObject.stopAnimating();
@@ -45,8 +49,8 @@
 	}
 
 	$scope.$watch(dataService.getModDate, function(){
-		var images = dataService.getPhotos();
-		if(images.length > 0){
+		//var images = dataService.getPhotos();
+		/*if(images.length > 0){
 			$scope.carouselDefaults.images = images;
 			if($scope.carouselObject){
 				console.log(images);
@@ -55,8 +59,29 @@
 			$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);		
 			}
 			//$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);	
-		}
+		}*/
 
+		if(dataService.getmodifiedPhotos()){
+			var images = dataService.getPhotos();
+
+			if(images.length > 0){
+				$scope.carouselDefaults.images = images;
+				if($scope.carouselObject){
+				console.log(images);
+				$scope.chageImages(images);
+				}else{
+				$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);		
+				}
+			}
+		}
+		
+		if(dataService.getmodifiedPlaying()){
+			if (dataService.getPlaying()) {
+				$scope.startCarousel();
+			}else{
+				$scope.stopCarousel();
+			}
+		}
 
 
 	});

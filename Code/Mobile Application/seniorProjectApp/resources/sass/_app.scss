@@ -9,7 +9,9 @@
 // Examples of using the icon mixin:
 // @include icon('user');
 @include icon('check2');
-
+@include icon('play');
+@include icon('play2');
+@include icon('pause');
 $phone-width : 767px;
 $tablet-width : 768px;
 $desktop-width : 1024px;
