@@ -72,7 +72,6 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 this.getPlaypauseButton().setIconCls('pause');
             }
 
-
         }
     },
     hideplayPause:function(){
@@ -82,6 +81,11 @@ Ext.define('FotoZap.controller.CampaignListController', {
         this.getCampaignPage().remove(this.getPlaypausePage());
     },
     showplayPause:function(){
+            this.playing = true;
+            if(this.getPlaypauseButton()){
+                this.getPlaypauseButton().setIconCls('pause');
+            }
+
         if(!this.getCampaignPage().down('playpausebar')){
             this.getCampaignPage().add(Ext.create('FotoZap.view.playPauseView'));
         }
@@ -280,6 +284,8 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 
                 this.getAppSession().release();
                 this.setAppSession(null);
+                this.cleanUpDevice();
+                this.hideplayPause();
             },this);
 
           this.getAppSession().on("message", function () {
