@@ -18,6 +18,7 @@
 	}
 	$scope.startCarousel = function(){
 		if($scope.carouselObject){
+			console.log('stopping the animation');
 			$scope.carouselObject.stopAnimating();
 		}
 	}

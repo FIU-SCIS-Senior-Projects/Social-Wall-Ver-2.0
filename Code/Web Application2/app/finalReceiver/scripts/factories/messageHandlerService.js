@@ -11,8 +11,8 @@
 				dataService.setmodifiedPlaying(true);
 				dataService.setmodifiedPhotos(false);
 				$rootScope.$apply(function(){
-                                        dataService.setModDate(new Date());
-                                });				
+                       dataService.setModDate(new Date());
+				});				
 			},
 			handlePause:function(){
 				console.log('handling the pause');
