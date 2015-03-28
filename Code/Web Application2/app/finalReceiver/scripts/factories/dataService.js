@@ -37,21 +37,21 @@
 		this.setModDate = function(newdate){
 			this.ModDate = newdate;
 		}
-
+///////////////////////////////////////////////////////
 		this.getmodifiedPlaying = function(){
 			return this.modifiedPlaying;
 		}
 		this.getPhotos = function(){
-			return thePhotos;
+			return this.thePhotos;
 		}
 		this.getModDate = function(){
-			return ModDate;
+			return this.ModDate;
 		}
 		this.getPlaying = function(){
-			return Playing;
+			return this.Playing;
 		}
 		this.getmodifiedPhotos = function(){
-			return modifiedPhotos;
+			return this.modifiedPhotos;
 		}
 
 	}]);

@@ -28,6 +28,7 @@
 
                  var fservice = fotoZapService;
 		         var dservice = dataService;
+		         
 		         var that = this;
 				fservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 					  var arrayOfsrc =  fservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
