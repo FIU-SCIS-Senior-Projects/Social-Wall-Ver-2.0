@@ -35,6 +35,7 @@
 			this.modifiedPhotos = modp;
 		}
 		this.setModDate = function(newdate){
+			console.log('setting the Mod Date');
 			this.ModDate = newdate;
 		}
 
@@ -42,16 +43,17 @@
 			return this.modifiedPlaying;
 		}
 		this.getPhotos = function(){
-			return thePhotos;
+			return this.thePhotos;
 		}
 		this.getModDate = function(){
-			return ModDate;
+			console.log('get the mod date');
+			return this.ModDate;
 		}
 		this.getPlaying = function(){
-			return Playing;
+			return this.Playing;
 		}
 		this.getmodifiedPhotos = function(){
-			return modifiedPhotos;
+			return this.modifiedPhotos;
 		}
 
 	}]);

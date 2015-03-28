@@ -286,9 +286,13 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 Ext.Msg.alert("Alert","I received your Message",Ext.emptyFn);
             },this);
 
-           /*mysession.on("ready",function(){
-            mysession.sendText("2nd Campaign"); 
-           });*/
+           this.getAppSession().on("ready",function(){
+                var send =this.getUsername() + " " +this.getPassword() + " "+ this.getActiveCampaign(); 
+                this.getAppSession().sendJSON({
+                    type:'campaignseleted',
+                    data:send
+                });
+           },this);
 
           this.getAppSession().connect().success(function(){
             Ext.Msg.alert("Alert","web app session success",Ext.emptyFn);
