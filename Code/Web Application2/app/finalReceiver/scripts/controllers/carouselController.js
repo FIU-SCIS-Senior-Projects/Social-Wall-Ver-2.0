@@ -48,7 +48,9 @@
 			$scope.currentAnimation = anim;
 	}
 
-	$scope.$watch(dataService.getModDate, function(){
+	$scope.$watch(function(){
+			return dataService.getModDate();
+		}, function(){
 		//var images = dataService.getPhotos();
 		/*if(images.length > 0){
 			$scope.carouselDefaults.images = images;
@@ -60,7 +62,9 @@
 			}
 			//$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);	
 		}*/
-
+		console.log('In the data service watch function');
+		console.log(dataService.getmodifiedPhotos());
+		console.log(dataService);
 		if(dataService.getmodifiedPhotos()){
 			var images = dataService.getPhotos();
 
@@ -82,9 +86,9 @@
 				$scope.stopCarousel();
 			}
 		}
+		
 
-
-	});
+	},true);
 
 
 }]);

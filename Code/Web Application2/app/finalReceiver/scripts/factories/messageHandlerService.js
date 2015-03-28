@@ -2,7 +2,7 @@
   'use strict';
 
 	angular.module('social-wall-receiverApp')
-	.factory('messageHandlerService', ['dataService','fotoZapService',function (dataService,fotoZapService) {
+	.factory('messageHandlerService', ['dataService','fotoZapService','$rootScope',function (dataService,fotoZapService,$rootScope) {
 		
 
 		return {
@@ -10,33 +10,51 @@
 				dataService.setPlaying(true);
 				dataService.setmodifiedPlaying(true);
 				dataService.setmodifiedPhotos(false);
-				dataService.setModDate(new Date());
+				$rootScope.$apply(function(){
+                                        dataService.setModDate(new Date());
+                                });				
 			},
 			handlePause:function(){
+				console.log('handling the pause');
+				console.log(dataService);
 				dataService.setPlaying(false);
 				dataService.setmodifiedPlaying(true);
 				dataService.setmodifiedPhotos(false);
-				dataService.setModDate(new Date());
+				$rootScope.$apply(function(){
+					dataService.setModDate(new Date());
+				});
+				
+				console.log(dataService);
 			},
 			handleCampaignSelected:function(object){
 				console.log('handling campaignselected message');
 				var data = object.data;
+				console.log(data);
+				console.log(fotoZapService);
 				var dataArray = data.split(" ");
 				var user = dataArray[0];
                 var pass = dataArray[1];
                 var campaignid = dataArray[2];
 
-                 var fservice = fotoZapService;
+                	 var fservice = fotoZapService;
 		         var dservice = dataService;
+<<<<<<< HEAD
 		         
 		         var that = this;
+=======
+			console.log(dservice);
+		         
+>>>>>>> 486bef932ea8049b9d330a6b9a153a66cd181870
 				fservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 					  var arrayOfsrc =  fservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
-				    dservice.setPhotos(arrayOfsrc);
+				console.log('in the inner function');   
+				 dservice.setPhotos(arrayOfsrc);
 				    dservice.setmodifiedPhotos(true);
 				    dservice.setmodifiedPlaying(false);
-					dservice.setModDate(new Date());
+				console.log('innner inner function');
+				   dservice.setModDate(new Date());
+				console.log('inner inner inner function');
 		
                    });
 			},
@@ -49,10 +67,10 @@
 						break;
 
 						case 'pause':
-						this.handlePause(messageObject);
+						this.handlePause();
 						break;
 
-						case 'campaignseleted'
+						case 'campaignseleted':
 
 						this.handleCampaignSelected(messageObject);
 						break;
