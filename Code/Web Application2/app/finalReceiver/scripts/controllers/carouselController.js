@@ -78,7 +78,7 @@
 				}
 			}
 		}
-		
+		console.log(dataService.getmodifiedPlaying());
 		if(dataService.getmodifiedPlaying()){
 			if (dataService.getPlaying()) {
 				$scope.startCarousel();

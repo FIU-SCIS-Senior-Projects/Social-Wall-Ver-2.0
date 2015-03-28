@@ -36,15 +36,11 @@
                 var pass = dataArray[1];
                 var campaignid = dataArray[2];
 
-                	 var fservice = fotoZapService;
+                var fservice = fotoZapService;
 		         var dservice = dataService;
-<<<<<<< HEAD
+
+		        console.log(dservice);
 		         
-		         var that = this;
-=======
-			console.log(dservice);
-		         
->>>>>>> 486bef932ea8049b9d330a6b9a153a66cd181870
 				fservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 					  var arrayOfsrc =  fservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
