@@ -17,7 +17,7 @@
         window.connectManager.on('ready',function(){
 
        document.getElementById('main').innerHTML +='Im ready to cast ';	
-      });
+      });		//Hi
 			//var fotozapservice = fotoZapService;
 			//var dataservice = dataService;
  			window.connectManager.on('message', function(data) {
