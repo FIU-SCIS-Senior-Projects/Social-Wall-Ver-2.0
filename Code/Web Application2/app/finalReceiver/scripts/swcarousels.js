@@ -207,6 +207,10 @@ swcarousels.prototype.init = function(options){
 			that.state.preloadImage(1,function(){
 				that.state.images = that.options.images;
 				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
+				console.log(that.canvasBuffer.xStart);
+				console.log(that.canvasBuffer.yStart);
+				console.log(that.canvasBuffer.renderableWidth);
+				console.log(that.canvasBuffer.renderableHeight);
 				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
 				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
 				that.animate.start();
