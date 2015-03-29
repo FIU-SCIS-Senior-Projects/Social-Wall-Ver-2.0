@@ -99,7 +99,7 @@ this.animate.switchFrame = function switchFrame() {
 
 		//canvasBuffer.renderNavigateLeft(state);
 		//canvasBuffer.renderNavigateRight(state);
-		
+
 		if (that.state.progress >= 100.0) {
 			console.log("Switch completed for " + that.state.switchTimerId);
 			that.state.switchInProgress = false;
@@ -484,7 +484,7 @@ swcarousels.prototype.setUpState = function(){
 		return that.options.preImages[that.state.nextFrame()].theimage;
 	};
 
-	
+
 	this.state.nextImage = function () {
 	return that.state.images[that.state.nextFrame()];
 	};
@@ -543,6 +543,7 @@ swcarousels.prototype.setUpState = function(){
 		console.log('image at index '+imageIndex + ' not initialized');
 			var temp = new Image();
 			imageObj.theimage = temp;
+			imageObj.theimage.crossOrigin="anonymous";
 			imageObj.loaded = false;
 			temp.onload = function(){
 				imageObj.loaded = true;
