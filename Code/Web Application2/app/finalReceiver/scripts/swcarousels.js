@@ -558,7 +558,7 @@ swcarousels.prototype.setUpState = function(){
 
 	this.state.preloadImage = function(imageIndex,callback){
 		if(imageIndex >= that.options.preImages.length){
-			if(calback){
+			if(callback){
 				callback();
 			}
 			return;
