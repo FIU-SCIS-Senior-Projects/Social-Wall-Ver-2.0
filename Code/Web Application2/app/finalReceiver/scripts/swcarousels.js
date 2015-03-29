@@ -388,7 +388,7 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 
 this.animationFunction.hardcut = function(options, state, canvasBuffer){
 	if(state.i ==1){
-		canvasBuffer.context.drawImage(state.preTargetImage(), 0,0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preTargetImage(), canvasBuffer.xStart,canvasBuffer.yStart, canvasBuffer.renderableWidth, canvasBuffer.renderableHeight);
 	}
 }
 
