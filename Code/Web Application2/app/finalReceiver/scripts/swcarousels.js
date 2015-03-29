@@ -42,16 +42,40 @@ swcarousels.prototype.changeImages = function(newimagesobject){
 	this.clearCanvas();
 	console.log(this.options.images);
 	this.options.images = newimagesobject;
+
+	this.options.preImages = [];
+		for (var i = 0; i < this.options.images.length; i++) {
+			var thepath = this.options.images[i];
+			var o = {
+				initialized:false,
+				theimage:null,
+				path:thepath,
+				loaded:false
+			};
+			this.options.preImages.push(o);
+	};	
+
 	console.log(this.options.images);
 	this.state.resetState();
 	var that = this;
-	this.state.preloadImages(function(images){
+	/*this.state.preloadImages(function(images){
 			console.log(images);
 			that.state.images = images;
 			that.canvasBuffer.context.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.canvasBuffer.scratch.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.animate.start();
+		});*/
+	
+	this.state.preloadImage(0, function(){
+			that.state.preloadImage(1,function(){
+				that.state.images = that.options.images;
+				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
+				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
+				that.animate.start();
+			});
 		});
+
+
 
 }
 
