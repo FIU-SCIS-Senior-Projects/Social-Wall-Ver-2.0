@@ -120,7 +120,7 @@ this.animate.switchFrame = function switchFrame() {
 		//console.log("Switching frames between " + that.state.currentFrame + " and " + that.state.nextFrame());
 
 		if(that.state.isPlaying){
-
+		
 		that.state.switchInProgress = true;
 		console.log("Switching frames between " + that.state.currentFrame + " and " + that.state.nextFrame());
 
@@ -152,16 +152,39 @@ swcarousels.prototype.init = function(options){
 		this.setupAnimate();
 		var that = this;
 
-
+		this.options.preImages = [];
+		for (var i = 0; i < this.options.images.length; i++) {
+			var thepath = this.options.images[i];
+			var o = {
+				initialized:false,
+				theimage:null,
+				path:thepath,
+				loaded:false
+			};
+			this.options.preImages.push(o);
+		};
 		//this.state.setStateImages(this.options);
 		
+		this.state.preloadImage(0, function(){
+			that.state.preloadImage(1,function(){
+			//	that.state.images = that.options.images;
+				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
+				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
+				that.animate.start();
+			});
+		});
+
+
+
+
+		/*
 		this.state.preloadImages(function(images){
 			console.log(images);
 			that.state.images = images;
 			that.canvasBuffer.context.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.canvasBuffer.scratch.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.animate.start();
-		});
+		});*/
 		
 };
 swcarousels.prototype.setupCanvasBuffer = function(){
@@ -279,7 +302,7 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 
 this.animationFunction.hardcut = function(options, state, canvasBuffer){
 	if(state.i ==1){
-		canvasBuffer.context.drawImage(state.targetImage(), 0,0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preTargetImage(), 0,0, canvasBuffer.width, canvasBuffer.height);
 	}
 }
 
@@ -293,9 +316,9 @@ this.animationFunction.scroll = function(options, state, canvasBuffer) {
 		//console.log(state);
 		//if(state.nextFrame() == 1){
 	//	console.log(state.nextFrame());
-		canvasBuffer.context.drawImage(state.sourceImage(), -x, 0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preSourceImage(), -x, 0, canvasBuffer.width, canvasBuffer.height);
 	//	}
-		canvasBuffer.context.drawImage(state.targetImage(), canvasBuffer.width - x, 0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preTargetImage(), canvasBuffer.width - x, 0, canvasBuffer.width, canvasBuffer.height);
 	//}
 };
 
@@ -409,6 +432,9 @@ swcarousels.prototype.setUpState = function(){
 	return that.state.images[that.state.currentFrame];
 	};
 
+	this.state.precurrentImage= function(){
+		return that.options.preImages[that.state.currentFrame].theimage;	
+	}
 
 	this.state.currentImage = function(){
 	return that.state.images[that.state.currentFrame];
@@ -448,13 +474,31 @@ swcarousels.prototype.setUpState = function(){
 	 return previous;
 	};
 
+	this.stat.preNextImage = function(){
+		return that.options.preImages[that.state.nextFrame()].theimage;
+	};
+
+
 	this.state.nextImage = function () {
 	return that.state.images[that.state.nextFrame()];
+	};
+
+	this.state.prePreviousImage = function(){
+		return that.options.preImages[that.state.nextFrame()].theimage;
 	};
 
 	this.state.previousImage = function () {
 	return that.state.images[that.state.previousFrame()];
 	};
+
+
+	this.state.preSourceImage = function(){
+		if (that.state.tempSource !== null) {
+		return that.state.tempSource;
+	}
+	return that.state.prePreviousImage();
+
+	}
 
 	this.state.sourceImage = function () {
 	if (that.state.tempSource !== null) {
@@ -471,27 +515,40 @@ swcarousels.prototype.setUpState = function(){
 	that.state.tempSource = img;
 	};	
 
+	this.state.preTargetImage = function(){
+		return that.state.precurrentImage();
+	}
+
 	this.state.targetImage = function () {
 	return that.state.currentImage();
 	};
 
 	this.state.PreloadImage = function(imageIndex,callback){
-		var imageObj = this.images[imageIndex];
+		if(imageIndex >= that.options.preImages.length){
+			if(calback){
+				callback();
+			}
+			return;
+		}
+		console.log('preloading image at index '+imageIndex);
+		var imageObj = that.options.preImages[imageIndex];
 
 		if(!imageObj.initialized){	
+		console.log('image at index '+imageIndex + ' not initialized');
 			var temp = new Image();
 			imageObj.theimage = temp;
 			imageObj.loaded = false;
 			temp.onload = function(){
 				imageObj.loaded = true;
-
+			console.log('image loaded');
 				if(callback){
 					callback();
 				}
 			}
 			imageObj.initialized = true;
-                imageObj.src = image_info.path;
+            imageObj.thimage.src = imageObj.path;
 		}
+		console.log('image at index '+imageIndex + ' is initialized');
 	};
 
 

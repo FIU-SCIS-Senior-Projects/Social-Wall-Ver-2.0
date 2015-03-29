@@ -56,7 +56,7 @@
  			}); 
 				 window.connectManager.init();   
   		}
-  		//	var campaignid = '3207';
+  	//		var campaignid = '3207';
   	//	fotoZapService.callApi('snoel006@fiu.edu','fotozap','https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 	//				  var arrayOfsrc =  fotoZapService.parseMediaIds(res.data.mediaIds,'snoel006@fiu.edu','fotozap',campaignid);
 	//				  dataService.setPhotos(arrayOfsrc);
