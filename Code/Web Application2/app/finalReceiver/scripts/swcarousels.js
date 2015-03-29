@@ -116,8 +116,11 @@ this.animate.switchFrame = function switchFrame() {
 			console.log("Skipping switch for " + that.state.animationTimerId);
 			return;
 		}
-
-		if(!that.options.preImages[that.state.nextFrame].loaded){
+		console.log(that.options.preImages);
+		var next = that.state.nextFrame();
+		console.log(next);
+		console.log(that.options.preImages[next]);
+		if(!that.options.preImages[that.state.nextFrame()].loaded){
 			console.log('the image at index '+ that.state.nextFrame+ 'is not loaded skipping switch');
 			return;
 		}
@@ -173,7 +176,7 @@ swcarousels.prototype.init = function(options){
 		
 		this.state.preloadImage(0, function(){
 			that.state.preloadImage(1,function(){
-			//	that.state.images = that.options.images;
+				that.state.images = that.options.images;
 				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.animate.start();
@@ -438,7 +441,7 @@ swcarousels.prototype.setUpState = function(){
 	return that.state.images[that.state.currentFrame];
 	};
 
-	this.state.precurrentImage= function(){
+	this.state.preCurrentImage= function(){
 		return that.options.preImages[that.state.currentFrame].theimage;	
 	}
 
@@ -480,7 +483,7 @@ swcarousels.prototype.setUpState = function(){
 	 return previous;
 	};
 
-	this.stat.preNextImage = function(){
+	this.state.preNextImage = function(){
 		return that.options.preImages[that.state.nextFrame()].theimage;
 	};
 
@@ -522,14 +525,14 @@ swcarousels.prototype.setUpState = function(){
 	};	
 
 	this.state.preTargetImage = function(){
-		return that.state.precurrentImage();
+		return that.state.preCurrentImage();
 	}
 
 	this.state.targetImage = function () {
 	return that.state.currentImage();
 	};
 
-	this.state.PreloadImage = function(imageIndex,callback){
+	this.state.preloadImage = function(imageIndex,callback){
 		if(imageIndex >= that.options.preImages.length){
 			if(calback){
 				callback();
@@ -553,7 +556,7 @@ swcarousels.prototype.setUpState = function(){
 				}
 			}
 			imageObj.initialized = true;
-            imageObj.thimage.src = imageObj.path;
+            		imageObj.theimage.src = imageObj.path;
 		}
 		console.log('image at index '+imageIndex + ' is initialized');
 	};
