@@ -69,6 +69,7 @@ swcarousels.prototype.changeImages = function(newimagesobject){
 	this.state.preloadImage(0, function(){
 			that.state.preloadImage(1,function(){
 				that.state.images = that.options.images;
+				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
 				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.animate.start();
@@ -201,6 +202,7 @@ swcarousels.prototype.init = function(options){
 		this.state.preloadImage(0, function(){
 			that.state.preloadImage(1,function(){
 				that.state.images = that.options.images;
+				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
 				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.animate.start();
@@ -222,12 +224,55 @@ swcarousels.prototype.init = function(options){
 };
 swcarousels.prototype.setupCanvasBuffer = function(){
 	var that = this;
+	this.canvasBuffer.renderableHeight=0;
+	this.canvasBuffer.renderableWidth=0;
+	this.canvasBuffer.xStart=0;
+	this.canvasBuffer.yStart=0;
+
 	this.canvasBuffer.width = this.options.width;
 	this.canvasBuffer.height = this.options.height;
 
 	this.canvasBuffer.invisible = function invisible(e) {
 		e.style.display = 'none';
 		return e;
+	}
+	
+	this.canvasBuffer.fitImageOn = function fitImageOn(canvas,imageObj){
+		var imageAspectRatio = imageObj.width / imageObj.height;
+  		var canvasAspectRatio = canvas.width / canvas.height;
+  		//var renderableHeight, renderableWidth, xStart, yStart;
+
+  // If image's aspect ratio is less than canvas's we fit on height
+  // and place the image centrally along width
+  if(imageAspectRatio < canvasAspectRatio) {
+      console.log('aspect ration is less than the canvas');
+      that.renderableHeight = canvas.height;
+      that.renderableWidth = imageObj.width * (renderableHeight / imageObj.height);
+      that.xStart = (canvas.width - renderableWidth) / 2;
+      that.yStart = 0;
+  }
+
+  // If image's aspect ratio is greater than canvas's we fit on width
+  // and place the image centrally along height
+  else if(imageAspectRatio > canvasAspectRatio) {
+  	console.log('aspect ration is greater than the canvas');
+      that.renderableWidth = canvas.width
+      that.renderableHeight = imageObj.height * (renderableWidth / imageObj.width);
+      that.xStart = 0;
+      that.yStart = (canvas.height - renderableHeight) / 2;
+  }
+
+  // Happy path - keep aspect ratio
+  else {
+      that.renderableHeight = canvas.height;
+      that.renderableWidth = canvas.width;
+      that.xStart = 0;
+      that.yStart = 0;
+  }
+	}
+
+	this.canvasBuffer.placeImage = function placeImage(image,context){
+		context.drawImage(image,that.xStart,that.yStart,that.renderableWidth,that.renderableHeight);
 	}
 
 

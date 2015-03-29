@@ -94,8 +94,9 @@ Ext.define('FotoZap.controller.CampaignListController', {
         if(this.getDevice()){
             //this.cleanUpSession();
             //this.appSession = null;
-            this.cleanUpDevice();
             this.getDiscoModal().hide();
+            this.cleanUpDevice();
+            
         }
     },
     hideActiveCampaignViews:function(campaignViewSelector,showCls){
