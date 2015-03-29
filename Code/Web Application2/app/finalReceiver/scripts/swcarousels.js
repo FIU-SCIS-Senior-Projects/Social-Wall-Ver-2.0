@@ -255,7 +255,7 @@ swcarousels.prototype.setupCanvasBuffer = function(){
   if(imageAspectRatio < canvasAspectRatio) {
       console.log('aspect ration is less than the canvas');
       that.canvasBuffer.renderableHeight = canvas.height;
-      that.canvasBuffer.renderableWidth = imageObj.width * (that.canvasBuffer.renderableWidth / imageObj.height);
+      that.canvasBuffer.renderableWidth = imageObj.width * (that.canvasBuffer.renderableHeight / imageObj.height);
       that.canvasBuffer.xStart = (canvas.width - that.canvasBuffer.renderableWidth) / 2;
       that.canvasBuffer.yStart = 0;
   }
