@@ -247,8 +247,8 @@ swcarousels.prototype.setupCanvasBuffer = function(){
   if(imageAspectRatio < canvasAspectRatio) {
       console.log('aspect ration is less than the canvas');
       that.renderableHeight = canvas.height;
-      that.renderableWidth = imageObj.width * (renderableHeight / imageObj.height);
-      that.xStart = (canvas.width - renderableWidth) / 2;
+      that.renderableWidth = imageObj.width * (that.renderableWidth / imageObj.height);
+      that.xStart = (canvas.width - that.renderableWidth) / 2;
       that.yStart = 0;
   }
 
@@ -257,9 +257,9 @@ swcarousels.prototype.setupCanvasBuffer = function(){
   else if(imageAspectRatio > canvasAspectRatio) {
   	console.log('aspect ration is greater than the canvas');
       that.renderableWidth = canvas.width
-      that.renderableHeight = imageObj.height * (renderableWidth / imageObj.width);
+      that.renderableHeight = imageObj.height * (that.renderableWidth / imageObj.width);
       that.xStart = 0;
-      that.yStart = (canvas.height - renderableHeight) / 2;
+      that.yStart = (canvas.height - that.renderableHeight) / 2;
   }
 
   // Happy path - keep aspect ratio
