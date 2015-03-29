@@ -99,7 +99,7 @@ this.animate.switchFrame = function switchFrame() {
 
 		//canvasBuffer.renderNavigateLeft(state);
 		//canvasBuffer.renderNavigateRight(state);
-
+		
 		if (that.state.progress >= 100.0) {
 			console.log("Switch completed for " + that.state.switchTimerId);
 			that.state.switchInProgress = false;
@@ -116,11 +116,16 @@ this.animate.switchFrame = function switchFrame() {
 			console.log("Skipping switch for " + that.state.animationTimerId);
 			return;
 		}
+
+		if(!that.options.preImages[that.state.nextFrame].loaded){
+			console.log('the image at index '+ that.state.nextFrame+ 'is not loaded skipping switch');
+			return;
+		}
 		//that.state.switchInProgress = true;
 		//console.log("Switching frames between " + that.state.currentFrame + " and " + that.state.nextFrame());
 
 		if(that.state.isPlaying){
-		
+
 		that.state.switchInProgress = true;
 		console.log("Switching frames between " + that.state.currentFrame + " and " + that.state.nextFrame());
 
@@ -128,10 +133,11 @@ this.animate.switchFrame = function switchFrame() {
 		that.state.progress = 0.0;
 		that.state.i = 0;
 
-		that.state.source = that.canvasBuffer.imageData(that.state.previousImage());
-		that.state.target = that.canvasBuffer.imageData(that.state.currentImage());
+		that.state.source = that.canvasBuffer.imageData(that.state.prePreviousImage());
+		that.state.target = that.canvasBuffer.imageData(that.state.preCurrentImage());
 		that.state.result = that.canvasBuffer.screenBuffer();
 
+		that.state.preloadImage(that.state.nextFrame());	
 		that.state.animationTimerId = requestAnimationFrame(that.animate.switchFrame);
 		}
 	}
@@ -478,13 +484,13 @@ swcarousels.prototype.setUpState = function(){
 		return that.options.preImages[that.state.nextFrame()].theimage;
 	};
 
-
+	
 	this.state.nextImage = function () {
 	return that.state.images[that.state.nextFrame()];
 	};
 
 	this.state.prePreviousImage = function(){
-		return that.options.preImages[that.state.nextFrame()].theimage;
+		return that.options.preImages[that.state.previousFrame()].theimage;
 	};
 
 	this.state.previousImage = function () {
