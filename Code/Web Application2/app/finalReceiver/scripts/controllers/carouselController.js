@@ -31,8 +31,8 @@
 
 	$scope.carouselDefaults = {
 		switchInterval: 5000, // millisecs between switch
-		width: 1250, // pixels
-		height: 650, // pixels
+		width: window.innerWidth, // pixels
+		height: window.innerHeight, // pixels
 		speed: 8, // pixels/16 millisecs
 		animationFunction: 'hardcut'	
 	};

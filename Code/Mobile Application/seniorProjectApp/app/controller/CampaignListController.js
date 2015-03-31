@@ -86,7 +86,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 this.getPlaypauseButton().setIconCls('pause');
             }
 
-        if(!this.getCampaignPage().down('playpausebar')){
+        if(!this.getCampaignPage().down('playpausebar') && this.getAppSession()){
             this.getCampaignPage().add(Ext.create('FotoZap.view.playPauseView'));
         }
     },
