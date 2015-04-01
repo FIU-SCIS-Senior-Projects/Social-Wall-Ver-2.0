@@ -5,31 +5,33 @@
 
 	angular.module('social-wall-receiverApp')
 	.controller('carouselController', ['$scope', 'dataService',function($scope,dataService){
-	$scope.paused = false;
+	$scope.paused = {};
 	$scope.currentCampaign=null;	
 	$scope.currentAnimation = 'scroll';
 	$scope.isCurrentAnimation = function(aninm){
 		return aninm === $scope.currentAnimation;
 	}
 	$scope.stopCarousel = function(){
-		$scope.$apply(function(){
-        	$scope.paused=true;
-        });
+		$scope.paused.isPaused=true;
+        var pauseElement = angular.element(document.querySelector('#pauseIcon'));
+        if(pauseElement.hasClass('ng-hide')){
+        	pauseElement.removeClass('ng-hide');
+        }
 
-		
-		if($scope.carouselObject){
+        if($scope.carouselObject){
 			$scope.carouselObject.stopCarousel();
 		}
 	}
 	$scope.startCarousel = function(){
-				
+		$scope.paused.isPaused=false;
+		var pauseElement = angular.element(document.querySelector('#pauseIcon'));
+        if(!pauseElement.hasClass('ng-hide')){
+        	pauseElement.addClass('ng-hide');
+        }
 
-		$scope.$apply(function(){
-        	$scope.paused=false;
-        });
 
 
-		if($scope.carouselObject){
+        if($scope.carouselObject){
 			$scope.carouselObject.startCarousel();
 		}
 	}
