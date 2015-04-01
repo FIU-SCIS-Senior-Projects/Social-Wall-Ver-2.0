@@ -18,10 +18,11 @@
 		background-color: black !important;
 	}
 	#pauseIcon{
-		position: absolute;
-		bottom:50px;
-		left: 50px;
-		color:white !important;
+	position: fixed;
+	  left: 50px;
+	  font-size: 6em;
+	  top: 88%;
+	  color: white !important;
 	}
 	</style>
 	<!-- Latest compiled and minified CSS -->
@@ -42,7 +43,7 @@
             <li ng-click="stopCarousel()"><button class="btn btn-danger">stop the animation</button></li>
             <li ng-click="chageImages()"><button class="btn btn-danger">changeTheImages</button></li>
  </ul> -->
-<span id="pauseIcon" class="glyphicon glyphicon-pause"></span>
+<span id="pauseIcon" class="glyphicon glyphicon-pause" ng-show="paused"></span>
 
 </div>
 

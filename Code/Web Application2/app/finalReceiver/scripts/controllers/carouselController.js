@@ -5,18 +5,20 @@
 
 	angular.module('social-wall-receiverApp')
 	.controller('carouselController', ['$scope', 'dataService',function($scope,dataService){
-		
+	$scope.paused = false;
 	$scope.currentCampaign=null;	
 	$scope.currentAnimation = 'scroll';
 	$scope.isCurrentAnimation = function(aninm){
 		return aninm === $scope.currentAnimation;
 	}
 	$scope.stopCarousel = function(){
+		$scope.paused=true;
 		if($scope.carouselObject){
 			$scope.carouselObject.stopCarousel();
 		}
 	}
 	$scope.startCarousel = function(){
+		$scope.paused=false;
 		if($scope.carouselObject){
 			$scope.carouselObject.startCarousel();
 		}
