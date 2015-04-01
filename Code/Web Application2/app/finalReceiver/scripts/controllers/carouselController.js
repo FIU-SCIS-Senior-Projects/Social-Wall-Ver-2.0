@@ -12,13 +12,23 @@
 		return aninm === $scope.currentAnimation;
 	}
 	$scope.stopCarousel = function(){
-		$scope.paused=true;
+		$scope.$apply(function(){
+        	$scope.paused=true;
+        });
+
+		
 		if($scope.carouselObject){
 			$scope.carouselObject.stopCarousel();
 		}
 	}
 	$scope.startCarousel = function(){
-		$scope.paused=false;
+				
+
+		$scope.$apply(function(){
+        	$scope.paused=false;
+        });
+
+
 		if($scope.carouselObject){
 			$scope.carouselObject.startCarousel();
 		}
