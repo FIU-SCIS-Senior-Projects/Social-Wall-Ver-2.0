@@ -46,7 +46,7 @@
 						var ids=[];
 						for (var i = 0; i < res.data.length; i++) {
 							var ob = res.data[i];
-							ids.push(obj.id);
+							ids.push(ob.id);
 						};
 						console.log(ids);
 						var arrayOfsrc =  fservice.parseMediaIds(ids,user,pass,campaignid);
