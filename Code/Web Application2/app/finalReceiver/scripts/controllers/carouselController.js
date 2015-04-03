@@ -12,10 +12,14 @@
 		return aninm === $scope.currentAnimation;
 	}
 	$scope.stopCarousel = function(){
-		$scope.carouselObject.stopCarousel();
+		if($scope.carouselObject){
+			$scope.carouselObject.stopCarousel();
+		}
 	}
 	$scope.startCarousel = function(){
-		$scope.carouselObject.stopAnimating();
+		if($scope.carouselObject){
+			$scope.carouselObject.startCarousel();
+		}
 	}
 	$scope.stopCarouselAnimation = function(){
 		$scope.carouselObject.stopAnimating();
@@ -44,9 +48,11 @@
 			$scope.currentAnimation = anim;
 	}
 
-	$scope.$watch(dataService.getModDate, function(){
-		var images = dataService.getPhotos();
-		if(images.length > 0){
+	$scope.$watch(function(){
+			return dataService.getModDate();
+		}, function(){
+		//var images = dataService.getPhotos();
+		/*if(images.length > 0){
 			$scope.carouselDefaults.images = images;
 			if($scope.carouselObject){
 				console.log(images);
@@ -55,11 +61,34 @@
 			$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);		
 			}
 			//$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);	
+		}*/
+		console.log('In the data service watch function');
+		console.log(dataService.getmodifiedPhotos());
+		console.log(dataService);
+		if(dataService.getmodifiedPhotos()){
+			var images = dataService.getPhotos();
+
+			if(images.length > 0){
+				$scope.carouselDefaults.images = images;
+				if($scope.carouselObject){
+				console.log(images);
+				$scope.chageImages(images);
+				}else{
+				$scope.carouselObject = $scope.createCarousel(document.getElementById('main'),$scope.carouselDefaults);		
+				}
+			}
 		}
+		console.log(dataService.getmodifiedPlaying());
+		if(dataService.getmodifiedPlaying()){
+			if (dataService.getPlaying()) {
+				$scope.startCarousel();
+			}else{
+				$scope.stopCarousel();
+			}
+		}
+		
 
-
-
-	});
+	},true);
 
 
 }]);

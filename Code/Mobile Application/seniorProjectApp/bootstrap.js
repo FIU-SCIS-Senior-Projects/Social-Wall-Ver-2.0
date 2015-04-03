@@ -672,7 +672,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "FotoZap.view.Searching": [],
   "FotoZap.view.customListItem": [],
   "FotoZap.view.disconnectChromecast": [],
-  "FotoZap.view.dropDownPanel": []
+  "FotoZap.view.dropDownPanel": [],
+  "FotoZap.view.playPauseView": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1420,6 +1421,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "FotoZap.view.dropDownPanel": [
     "widget.dropdownpanel"
+  ],
+  "FotoZap.view.playPauseView": [
+    "widget.playpausebar"
   ]
 });
 

@@ -25,7 +25,8 @@ Ext.application({
         'CampaignPage',
         'dropDownPanel',
         'disconnectChromecast',
-        'customListItem'
+        'customListItem',
+        'playPauseView'
     ],
     models:[
         'Campaign',

@@ -42,16 +42,45 @@ swcarousels.prototype.changeImages = function(newimagesobject){
 	this.clearCanvas();
 	console.log(this.options.images);
 	this.options.images = newimagesobject;
+
+	this.options.preImages = [];
+		for (var i = 0; i < this.options.images.length; i++) {
+			var thepath = this.options.images[i];
+			var o = {
+				initialized:false,
+				theimage:null,
+				path:thepath,
+				loaded:false
+			};
+			this.options.preImages.push(o);
+	};	
+
 	console.log(this.options.images);
 	this.state.resetState();
 	var that = this;
-	this.state.preloadImages(function(images){
+	/*this.state.preloadImages(function(images){
 			console.log(images);
 			that.state.images = images;
 			that.canvasBuffer.context.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.canvasBuffer.scratch.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.animate.start();
+		});*/
+	
+	this.state.preloadImage(0, function(){
+			that.state.preloadImage(1,function(){
+				that.state.images = that.options.images;
+				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
+				console.log(that.canvasBuffer.xStart);
+				console.log(that.canvasBuffer.yStart);
+				console.log(that.canvasBuffer.renderableWidth);
+				console.log(that.canvasBuffer.renderableHeight);
+				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
+				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
+				that.animate.start();
+			});
 		});
+
+
 
 }
 
@@ -116,6 +145,14 @@ this.animate.switchFrame = function switchFrame() {
 			console.log("Skipping switch for " + that.state.animationTimerId);
 			return;
 		}
+		console.log(that.options.preImages);
+		var next = that.state.nextFrame();
+		console.log(next);
+		console.log(that.options.preImages[next]);
+		if(!that.options.preImages[that.state.nextFrame()].loaded){
+			console.log('the image at index '+ that.state.nextFrame+ 'is not loaded skipping switch');
+			return;
+		}
 		//that.state.switchInProgress = true;
 		//console.log("Switching frames between " + that.state.currentFrame + " and " + that.state.nextFrame());
 
@@ -128,10 +165,11 @@ this.animate.switchFrame = function switchFrame() {
 		that.state.progress = 0.0;
 		that.state.i = 0;
 
-		that.state.source = that.canvasBuffer.imageData(that.state.previousImage());
-		that.state.target = that.canvasBuffer.imageData(that.state.currentImage());
+		that.state.source = that.canvasBuffer.imageData(that.state.prePreviousImage());
+		that.state.target = that.canvasBuffer.imageData(that.state.preCurrentImage());
 		that.state.result = that.canvasBuffer.screenBuffer();
 
+		that.state.preloadImage(that.state.nextFrame());	
 		that.state.animationTimerId = requestAnimationFrame(that.animate.switchFrame);
 		}
 	}
@@ -152,26 +190,97 @@ swcarousels.prototype.init = function(options){
 		this.setupAnimate();
 		var that = this;
 
-
+		this.options.preImages = [];
+		for (var i = 0; i < this.options.images.length; i++) {
+			var thepath = this.options.images[i];
+			var o = {
+				initialized:false,
+				theimage:null,
+				path:thepath,
+				loaded:false
+			};
+			this.options.preImages.push(o);
+		};
 		//this.state.setStateImages(this.options);
 		
+		this.state.preloadImage(0, function(){
+			that.state.preloadImage(1,function(){
+				that.state.images = that.options.images;
+				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
+				console.log(that.canvasBuffer.xStart);
+				console.log(that.canvasBuffer.yStart);
+				console.log(that.canvasBuffer.renderableWidth);
+				console.log(that.canvasBuffer.renderableHeight);
+				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
+				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
+				that.animate.start();
+			});
+		});
+
+
+
+
+		/*
 		this.state.preloadImages(function(images){
 			console.log(images);
 			that.state.images = images;
 			that.canvasBuffer.context.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.canvasBuffer.scratch.drawImage(that.state.images[0], 0, 0, that.options.width, that.options.height);		
 			that.animate.start();
-		});
+		});*/
 		
 };
 swcarousels.prototype.setupCanvasBuffer = function(){
 	var that = this;
+	this.canvasBuffer.renderableHeight=0;
+	this.canvasBuffer.renderableWidth=0;
+	this.canvasBuffer.xStart=0;
+	this.canvasBuffer.yStart=0;
+
 	this.canvasBuffer.width = this.options.width;
 	this.canvasBuffer.height = this.options.height;
 
 	this.canvasBuffer.invisible = function invisible(e) {
 		e.style.display = 'none';
 		return e;
+	}
+	
+	this.canvasBuffer.fitImageOn = function fitImageOn(canvas,imageObj){
+		var imageAspectRatio = imageObj.width / imageObj.height;
+  		var canvasAspectRatio = canvas.width / canvas.height;
+  		//var renderableHeight, renderableWidth, xStart, yStart;
+
+  // If image's aspect ratio is less than canvas's we fit on height
+  // and place the image centrally along width
+  if(imageAspectRatio < canvasAspectRatio) {
+      console.log('aspect ration is less than the canvas');
+      that.canvasBuffer.renderableHeight = canvas.height;
+      that.canvasBuffer.renderableWidth = imageObj.width * (that.canvasBuffer.renderableHeight / imageObj.height);
+      that.canvasBuffer.xStart = (canvas.width - that.canvasBuffer.renderableWidth) / 2;
+      that.canvasBuffer.yStart = 0;
+  }
+
+  // If image's aspect ratio is greater than canvas's we fit on width
+  // and place the image centrally along height
+  else if(imageAspectRatio > canvasAspectRatio) {
+  	console.log('aspect ration is greater than the canvas');
+      that.renderableWidth = canvas.width
+      that.renderableHeight = imageObj.height * (that.renderableWidth / imageObj.width);
+      that.xStart = 0;
+      that.yStart = (canvas.height - that.renderableHeight) / 2;
+  }
+
+  // Happy path - keep aspect ratio
+  else {
+      that.renderableHeight = canvas.height;
+      that.renderableWidth = canvas.width;
+      that.xStart = 0;
+      that.yStart = 0;
+  }
+	}
+
+	this.canvasBuffer.placeImage = function placeImage(image,context){
+		context.drawImage(image,that.xStart,that.yStart,that.renderableWidth,that.renderableHeight);
 	}
 
 
@@ -279,7 +388,7 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 
 this.animationFunction.hardcut = function(options, state, canvasBuffer){
 	if(state.i ==1){
-		canvasBuffer.context.drawImage(state.targetImage(), 0,0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preTargetImage(), canvasBuffer.xStart,canvasBuffer.yStart, canvasBuffer.renderableWidth, canvasBuffer.renderableHeight);
 	}
 }
 
@@ -293,9 +402,9 @@ this.animationFunction.scroll = function(options, state, canvasBuffer) {
 		//console.log(state);
 		//if(state.nextFrame() == 1){
 	//	console.log(state.nextFrame());
-		canvasBuffer.context.drawImage(state.sourceImage(), -x, 0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preSourceImage(), -x, 0, canvasBuffer.width, canvasBuffer.height);
 	//	}
-		canvasBuffer.context.drawImage(state.targetImage(), canvasBuffer.width - x, 0, canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preTargetImage(), canvasBuffer.width - x, 0, canvasBuffer.width, canvasBuffer.height);
 	//}
 };
 
@@ -409,6 +518,9 @@ swcarousels.prototype.setUpState = function(){
 	return that.state.images[that.state.currentFrame];
 	};
 
+	this.state.preCurrentImage= function(){
+		return that.options.preImages[that.state.currentFrame].theimage;	
+	}
 
 	this.state.currentImage = function(){
 	return that.state.images[that.state.currentFrame];
@@ -448,13 +560,31 @@ swcarousels.prototype.setUpState = function(){
 	 return previous;
 	};
 
+	this.state.preNextImage = function(){
+		return that.options.preImages[that.state.nextFrame()].theimage;
+	};
+
+
 	this.state.nextImage = function () {
 	return that.state.images[that.state.nextFrame()];
+	};
+
+	this.state.prePreviousImage = function(){
+		return that.options.preImages[that.state.previousFrame()].theimage;
 	};
 
 	this.state.previousImage = function () {
 	return that.state.images[that.state.previousFrame()];
 	};
+
+
+	this.state.preSourceImage = function(){
+		if (that.state.tempSource !== null) {
+		return that.state.tempSource;
+	}
+	return that.state.prePreviousImage();
+
+	}
 
 	this.state.sourceImage = function () {
 	if (that.state.tempSource !== null) {
@@ -471,27 +601,41 @@ swcarousels.prototype.setUpState = function(){
 	that.state.tempSource = img;
 	};	
 
+	this.state.preTargetImage = function(){
+		return that.state.preCurrentImage();
+	}
+
 	this.state.targetImage = function () {
 	return that.state.currentImage();
 	};
 
-	this.state.PreloadImage = function(imageIndex,callback){
-		var imageObj = this.images[imageIndex];
+	this.state.preloadImage = function(imageIndex,callback){
+		if(imageIndex >= that.options.preImages.length){
+			if(callback){
+				callback();
+			}
+			return;
+		}
+		console.log('preloading image at index '+imageIndex);
+		var imageObj = that.options.preImages[imageIndex];
 
 		if(!imageObj.initialized){	
+		console.log('image at index '+imageIndex + ' not initialized');
 			var temp = new Image();
 			imageObj.theimage = temp;
+			imageObj.theimage.crossOrigin="anonymous";
 			imageObj.loaded = false;
 			temp.onload = function(){
 				imageObj.loaded = true;
-
+			console.log('image loaded');
 				if(callback){
 					callback();
 				}
 			}
 			imageObj.initialized = true;
-                imageObj.src = image_info.path;
+            		imageObj.theimage.src = imageObj.path;
 		}
+		console.log('image at index '+imageIndex + ' is initialized');
 	};
 
 

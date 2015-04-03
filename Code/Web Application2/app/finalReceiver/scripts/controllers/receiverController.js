@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('social-wall-receiverApp')
-  .controller('receiverController', ['$scope','fotoZapService', 'dataService',function($scope,fotoZapService,dataService){
+  .controller('receiverController', ['$scope','messageHandlerService',function($scope,messageHandlerService){
   		
 
   		window.onload = function(){
@@ -17,11 +17,11 @@
         window.connectManager.on('ready',function(){
 
        document.getElementById('main').innerHTML +='Im ready to cast ';	
-      });
-			var fotozapservice = fotoZapService;
-			var dataservice = dataService;
+      });		//Hi
+			//var fotozapservice = fotoZapService;
+			//var dataservice = dataService;
  			window.connectManager.on('message', function(data) {
-		
+		/*
 		    var from = data.from;
                     var message = data.message;
                     var messageString;
@@ -51,11 +51,12 @@
 					  dservice.setModDate(new Date());
 		
                    });
-
- 			});
+            */
+            messageHandlerService.handleMessage(data.message);
+ 			}); 
 				 window.connectManager.init();   
   		}
-  		//	var campaignid = '3207';
+  	//		var campaignid = '3207';
   	//	fotoZapService.callApi('snoel006@fiu.edu','fotozap','https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
 	//				  var arrayOfsrc =  fotoZapService.parseMediaIds(res.data.mediaIds,'snoel006@fiu.edu','fotozap',campaignid);
 	//				  dataService.setPhotos(arrayOfsrc);
