@@ -41,8 +41,15 @@
 
 		        console.log(dservice);
 		         
-				fservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media').then(function(res){
-					  var arrayOfsrc =  fservice.parseMediaIds(res.data.mediaIds,user,pass,campaignid);
+				fservice.callApi(user,pass,'https://zap-rest.fotozap.com/campaigns/'+campaignid+'/media?offset=0&limit=50').then(function(res){
+						
+						var ids=[];
+						for (var i = 0; i < res.data.length; i++) {
+							var ob = res.data[i];
+							ids.push(ob.id);
+						};
+						console.log(ids);
+						var arrayOfsrc =  fservice.parseMediaIds(ids,user,pass,campaignid);
 					// document.getElementById('main').innerHTML +='In the inner function';
 				console.log('in the inner function');   
 				 dservice.setPhotos(arrayOfsrc);
