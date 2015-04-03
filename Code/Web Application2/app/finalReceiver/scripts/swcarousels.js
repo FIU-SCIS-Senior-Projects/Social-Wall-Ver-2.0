@@ -30,7 +30,7 @@ function swcarousels(element,options){
 		width: 512, // pixels
 		height: 255, // pixels
 		speed: 8, // pixels/16 millisecs
-		animationFunction: this.animationFunction.scroll
+		animationFunction: this.animationFunction.hardcut
 	};
 	//Initializes the carousel
 	this.init(options);
@@ -276,6 +276,12 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 	canvasBuffer.context.drawImage(canvasBuffer.scratchCanvas, 0,0, canvasBuffer.width, canvasBuffer.height);
 	
 };
+
+this.animationFunction.hardcut = function(options, state, canvasBuffer){
+	if(state.i ==1){
+		canvasBuffer.context.drawImage(state.targetImage(), 0,0, canvasBuffer.width, canvasBuffer.height);
+	}
+}
 
 this.animationFunction.scroll = function(options, state, canvasBuffer) {
 	var x = state.progress * options.width/100.0;

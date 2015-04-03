@@ -30,7 +30,7 @@
 		width: 1250, // pixels
 		height: 650, // pixels
 		speed: 8, // pixels/16 millisecs
-		animationFunction: 'scroll'	
+		animationFunction: 'hardcut'	
 	};
 
 	$scope.createCarousel = function(parentElement,options){
