@@ -51,6 +51,9 @@ $desktop-width : 1024px;
 	margin:10px !important;
 	width:320px !important;
 }
+.text-field-login input {
+	text-align:center !important;
+}
 .icon-cast, #cast-button{
 	float:right !important;
 }
@@ -88,14 +91,16 @@ transform: translateY(75%);
 }
     @media only screen and (max-width:767px) {
 
-	  .big-button.bigblue{
+	  .big-button.bigblue {
 
 	  	width:70% !important;
 	  }
 	.text-field-login{
 		width:70% !important;
 	}
-
+	#login-logo{
+		width:230px !important;	
+	}
 
 
    }

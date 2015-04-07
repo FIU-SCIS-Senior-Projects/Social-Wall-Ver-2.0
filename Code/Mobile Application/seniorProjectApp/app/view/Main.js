@@ -12,7 +12,7 @@ Ext.define('FotoZap.view.Main', {
         items: [
             {   
                 xtype:'panel',
-                html: '<img src="resources/images/FotoZapLogoMediumCropedcopy-ConvertImage.png"/>'            
+                html: '<img id="login-logo" src="resources/images/FotoZapLogoMediumCropedcopy-ConvertImage.png"/>'            
             },{
                 xtype: 'textfield',
                 itemId: 'email',
