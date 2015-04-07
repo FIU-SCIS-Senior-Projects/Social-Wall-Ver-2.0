@@ -68,7 +68,9 @@ Ext.application({
     //localStorage.setItem("p","fotozap");
        //Ext.getStore('theUsers').load();
         //Ext.getStore('theUsers').sync();
-
+       setTimeout(function() {
+        navigator.splashscreen.hide();
+    }, 2000);
         // Initialize the main view
         Ext.Viewport.add(Ext.create('FotoZap.view.Main'));
     },
