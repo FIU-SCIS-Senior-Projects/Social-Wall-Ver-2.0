@@ -410,6 +410,7 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 
 this.animationFunction.hardcut = function(options, state, canvasBuffer){
 	if(state.i ==1){
+		canvasBuffer.scratch.clearRect(0,0,canvasBuffer.width, canvasBuffer.height);
 		canvasBuffer.context.drawImage(state.preTargetImage(), options.preImages[state.currentFrame].aspectratio.x,options.preImages[state.currentFrame].aspectratio.y, options.preImages[state.currentFrame].aspectratio.awidth, options.preImages[state.currentFrame].aspectratio.aheight);
 	}
 }

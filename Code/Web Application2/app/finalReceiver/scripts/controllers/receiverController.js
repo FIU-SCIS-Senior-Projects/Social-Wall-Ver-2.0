@@ -11,12 +11,14 @@
   			window.connectManager.on('join',function(){
 
 			
-				document.getElementById('main').innerHTML +='SOMEONE LOGGED IN '; 
+			//	document.getElementById('main').innerHTML +='SOMEONE LOGGED IN '; 
+      console.log('SOMEONE LOGGED IN');
 			});
 
         window.connectManager.on('ready',function(){
 
-       document.getElementById('main').innerHTML +='Im ready to cast ';	
+       //document.getElementById('main').innerHTML +='Im ready to cast ';	
+       console.log('Im ready to cast ');
       });		//Hi
 			//var fotozapservice = fotoZapService;
 			//var dataservice = dataService;
