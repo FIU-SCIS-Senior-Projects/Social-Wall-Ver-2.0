@@ -9,6 +9,7 @@ Ext.define('FotoZap.view.disconnectChromecast', {
     xtype:'disconnectModal',
     config: {
         modal:true,
+        itemId:'diconnectWindow',
        layout:'fit',
        centered:true,
         hideOnMaskTap:true,

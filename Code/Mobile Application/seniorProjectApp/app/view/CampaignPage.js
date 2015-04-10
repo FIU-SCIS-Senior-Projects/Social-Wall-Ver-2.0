@@ -20,6 +20,10 @@ Ext.define('FotoZap.view.CampaignPage', {
             align:'left',
             itemId:'logoutbutton'
           },{
+            iconCls:'refresh',
+            align:'right',
+            itemId:'joinbutton'
+          },{
               iconCls:'icon-cast',
               align:'right',
               hidden:true,

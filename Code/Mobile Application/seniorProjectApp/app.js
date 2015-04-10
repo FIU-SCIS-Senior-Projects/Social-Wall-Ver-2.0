@@ -70,11 +70,21 @@ Ext.application({
         //Ext.getStore('theUsers').sync();
        setTimeout(function() {
         navigator.splashscreen.hide();
-    }, 2000);
+    }, 5000);
         // Initialize the main view
+        this.setupLifeCycleEvents();
         Ext.Viewport.add(Ext.create('FotoZap.view.Main'));
     },
-
+    setupLifeCycleEvents:function(){
+        document.addEventListener("deviceready",function(){
+            document.addEventListener("pause",function(){
+                setTimeout(function() {
+                FotoZap.app.getController('CampaignListController').onPause();
+        }, 5000);
+                
+            });
+        });
+    },
     onUpdated: function() {
         Ext.Msg.confirm(
             "Application Update",
