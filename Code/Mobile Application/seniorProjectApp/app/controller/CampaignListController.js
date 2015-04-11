@@ -57,43 +57,30 @@ Ext.define('FotoZap.controller.CampaignListController', {
 Ext.Msg.alert("Alert","I received your Message",Ext.emptyFn);
     },
     rejoinApp:function(){
-        this.cleanUpSession();
-
+    var callAPi = function(){
+       // Ext.Msg.alert("Alert","I received your Message",Ext.emptyFn);
        this.getDevice().getWebAppLauncher().joinWebApp(this.getWebAppId()).success(function(websession){
-                
-               // Ext.Msg.alert('Social Wall','You Rejoined the App',Ext.emptyFn);
-                //var sesh = websession.acquire();
-                //this.setAppSession(websession.acquire());
-                //alert(this.getAppSession());
-                //this.getAppSession().on("disconnect",this.cleanUpSession,this);
-
-                //this.getAppSession().on("message", function () {
-                //Ext.Msg.alert("Alert","I received your Message",Ext.emptyFn);
-            //},this);
-
-              //  this.getAppSession().connect().success(function(){
-                  // alert(this.getAppSession());
-                   //this.setAppSession(sesh);
-               //     Ext.Msg.alert('Social Wall','You Connected the new Session',Ext.emptyFn);
-                //},this).error(function(error){
-                 //       Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.message,Ext.emptyFn);
-                //},this);
                 this.setupWebAppSession(websession);
-                
-                
        },this).error(function(error){
             Ext.Msg.alert('Social Wall','got an error '+ error.message,Ext.emptyFn);
        },this); 
+   };
+   var newCall =  callAPi.bind(this);        
+        this.cleanUpSession(newCall);
+
     },
     setupWebAppSession:function(websession){
                 this.setAppSession(websession.acquire());
                 //alert(this.getAppSession());
-                this.getAppSession().on("message",this.handleMessage,this);
-                this.getAppSession().on("disconnect",this.cleanUpSession,this);
+                
+                websession.on("message",this.handleMessage,this);
+                websession.on("disconnect",function(){
+                    Ext.Msg.alert('Social Wall',this.getAppSession(),Ext.emptyFn);
+                },this);
 
-                this.getAppSession().connect()
-                    .success(this.handleSessionConnect,this)
-                    .error(this.handleSessionError,this);
+                //this.appSession.connect()
+                 //   .success(this.handleSessionConnect,this)
+                  //  .error(this.handleSessionError,this);
     },
     handleSessionConnect:function(){
 Ext.Msg.alert('Social Wall','You Connected the new Session',Ext.emptyFn);
@@ -318,11 +305,11 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
     },
     cleanUpDevice:function(){
         
-           // if(!this.getDevice()){
-             //   return;
-            //}
-            this.getDevice().off("ready");
-            this.getDevice().off("disconnect");
+           if(!this.getDevice()){
+                return;
+            }
+           this.getDevice().off("ready");
+           this.getDevice().off("disconnect");
            this.getCastButton().setIconCls('icon-cast');  
             //   Ext.Msg.alert("Alert","The Device is ready to use",Ext.emptyFn);
             this.getDevice().disconnect();
@@ -330,14 +317,29 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
         
     },
     cleanUpSession:function(callback){
+        Ext.Msg.alert("Alert","clean up disconnect session fired",Ext.emptyFn); 
         if(this.getAppSession()){
                 this.getAppSession().off("message");
                 this.getAppSession().off("disconnect");
 
-                this.getAppSession.disconnect();
+                this.getAppSession().disconnect()
+                .success(function(){
                 this.getAppSession().release();
                 this.setAppSession(null);
+                this.hideplayPause();
+                    if(callback){
+                        callback();
+                    }
+                },this).error(function(error){
+                       Ext.Msg.alert("Alert","There was error with disconnect session "+ error.message,Ext.emptyFn); 
+                },this);
+                
+        }else{
+            if(callback){
+                callback();
+            }
         }
+        this.hideplayPause();
     },
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
@@ -409,7 +411,7 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
         Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
         Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main')); 
         //that.cleanUpSession().bind(that);
-        that.cleanUpDevice().bind(that);
+        that.cleanUpDevice();
                 
         
     }
