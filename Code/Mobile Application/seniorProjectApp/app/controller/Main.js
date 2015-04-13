@@ -128,26 +128,20 @@ Ext.define('FotoZap.controller.Main', {
 	 		}
 	 		
 	 	}	
-	 	//console.log(usernametext);
+	 	console.log(droptext +" " + usernametext);
 	 	
-	 	//userstore.filter("username",usernametext);
-	 	//userstore.filter({
-	 	//	property: 'username',
-    	//	value: usernametext,
-    	//	anyMatch: true,
-    	//	caseSensitive: false
-	 	//});
-		//console.log(userstore.getCount());
-	 	if(droptext  && usernametext!==""){
+	 	if(droptext  && usernametext !==""){
 	 		if(!this.getDropdownpanel()){
 	 		var dr = Ext.create('FotoZap.view.dropDownPanel',{
 	 			width:this.getEmailField().element.getWidth()+'px',
 	 			height:this.getEmailField().element.getHeight()+'px'
 	 		});
 	 		dr.showBy(this.getEmailField(),"bc-tc");
-	 		console.log(this.getDropdownlabel().setHtml(droptext));
+	 		console.log(this.getDropdownlabel());
+	 		this.getDropdownlabel().setHtml(droptext);
 	 		}else{
 	 		this.getDropdownpanel().showBy(this.getEmailField(),"bc-tc");	
+	 		this.getDropdownlabel().setHtml(droptext);
 	 		}
 
 	 	}else{

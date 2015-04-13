@@ -57,41 +57,48 @@ Ext.define('FotoZap.controller.CampaignListController', {
 Ext.Msg.alert("Alert","I received your Message",Ext.emptyFn);
     },
     rejoinApp:function(){
+      //  if(!this.getDevice()){
+       //     return;
+       // }
+
     var callAPi = function(){
-       // Ext.Msg.alert("Alert","I received your Message",Ext.emptyFn);
        this.getDevice().getWebAppLauncher().joinWebApp(this.getWebAppId()).success(function(websession){
                 this.setupWebAppSession(websession);
        },this).error(function(error){
-            Ext.Msg.alert('Social Wall','got an error '+ error.message,Ext.emptyFn);
+            this.hideplayPause();
+            Ext.Msg.alert('Slideshow',error.message,Ext.emptyFn);
        },this); 
    };
    var newCall =  callAPi.bind(this);        
         this.cleanUpSession(newCall);
-
     },
     setupWebAppSession:function(websession){
                 this.setAppSession(websession.acquire());
+                this.showplayPause();
                 //alert(this.getAppSession());
                 
-                websession.on("message",this.handleMessage,this);
-                websession.on("disconnect",function(){
-                    Ext.Msg.alert('Social Wall',this.getAppSession(),Ext.emptyFn);
+                //websession.on("message",this.handleMessage,this);
+                this.getAppSession().addListener("disconnect",function(){
+                    this.cleanUpSession();
                 },this);
-
-                //this.appSession.connect()
-                 //   .success(this.handleSessionConnect,this)
+                
+                //this.getAppSession().connect()
+                 //  .success(this.handleSessionConnect,this)
                   //  .error(this.handleSessionError,this);
     },
     handleSessionConnect:function(){
-Ext.Msg.alert('Social Wall','You Connected the new Session',Ext.emptyFn);
+        this.getAppSession().addListener("disconnect",function(){
+                    Ext.Msg.alert('Social Wall',this.getAppSession(),Ext.emptyFn);
+                },this);
+Ext.Msg.alert('Slideshow','You Connected the new Session',Ext.emptyFn);
     },
     handleSessionError:function(){
     this.cleanupSession();
-Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.message,Ext.emptyFn);
+Ext.Msg.alert('Slideshow','there was error connecting new session '+ error.message,Ext.emptyFn);
     },
     onPause:function(){
         if(this.getAppSession()){
-             Ext.Msg.alert('Social Wall','The session is still active',Ext.emptyFn);
+            // Ext.Msg.alert('Social Wall','The session is still active',Ext.emptyFn);
         }else{
            // alert(this.getDevice().isReady());
             if(this.getDevice()){
@@ -138,25 +145,37 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
         }
     },
     hideplayPause:function(){
-        if(!this.playing){
-            this.playing = true;
-        }
+        //if(!this.playing){
+         //   this.playing = true;
+        //}
         this.getCampaignPage().remove(this.getPlaypausePage());
     },
     showplayPause:function(){
-            this.playing = true;
+            //this.playing = true;
             if(this.getPlaypauseButton()){
-                this.getPlaypauseButton().setIconCls('pause');
+                if(this.playing==true){
+                    this.getPlaypauseButton().setIconCls('pause');
+                }else{
+                    this.getPlaypauseButton().setIconCls('play');
+                }
             }
-
+            
         if(!this.getCampaignPage().down('playpausebar') && this.getAppSession()){
             this.getCampaignPage().add(Ext.create('FotoZap.view.playPauseView'));
+            if(this.playing == false){
+                this.getPlaypauseButton().setIconCls('play');
+            }
         }
     },
     disconnectPressed:function(){
         if(this.getDevice()){
             //var pnl = Ext.Container.getComponent('diconnectWindow');
             //pnl.destroy();
+            var webFilter = new ConnectSDK.CapabilityFilter([
+                "WebAppLauncher.Launch"
+            ]);
+            ConnectSDK.discoveryManager.setCapabilityFilters([webFilter]); 
+            ConnectSDK.discoveryManager.startDiscovery();
             this.getDiscoModal().hide();
             this.cleanUpDevice();
             this.getDiscoModal().hide();        
@@ -197,13 +216,15 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
    Ext.getStore('theCampaigns').setData(newjsondata);
     },
     CampaignSelected:function(list,record,e0pts){
-    	this.setActiveCampaign(record.data.id);
+    	//this.setActiveCampaign(record.data.id);
 
         var sending =  this.getUsername() + " "+ this.getPassword() +" "+record.data.id;
         if(this.getAppSession()){
+          this.setActiveCampaign(record.data.id);
             //alert(this.getAppSession());
            // this.setActiveCampaign(record.data.id);
-           Ext.Msg.alert('Social Wall','You sent a message',Ext.emptyFn);
+          // Ext.Msg.alert('Social Wall','You sent a message',Ext.emptyFn);
+        //  this.setActiveCampaign(record.data.id);
            var message = {
                 type:'campaignseleted',
                 data:sending
@@ -215,7 +236,11 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
           //  width:'50px',
          //   height:'50px'
         //});
-        this.showplayPause();
+        if(this.getAppSession()){
+            this.resetPlaying();
+          this.showplayPause();    
+        }
+        //this.showplayPause();
         var selectedItem = list.getItemAt(list.getStore().indexOf(record));
       
         setTimeout(function(){
@@ -229,6 +254,10 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
             console.log('ConnectSDK not available');
         }else{
             ConnectSDK.discoveryManager.on('devicelistchanged',this.DeviceListChange,this);
+            var webFilter = new ConnectSDK.CapabilityFilter([
+                "WebAppLauncher.Launch"
+            ]);
+            ConnectSDK.discoveryManager.setCapabilityFilters([webFilter]);
             ConnectSDK.discoveryManager.startDiscovery();
         }
 
@@ -279,25 +308,24 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
             if(this.devicesDetected()){
                 //var that = this;
                 //If there is an active campaign and their is not a device already connected
-                if(this.checkActiveCampaign() && !this.getDevice()){
+                if(!this.getDevice()){
                    //var  thoe = that;
-                    ConnectSDK.discoveryManager.pickDevice().success(this.devicePickedSuccessful,this);
+                    ConnectSDK.discoveryManager.pickDevice()
+                    .success(this.devicePickedSuccessful,this)
+                    .error(function(error){
+                        Ext.Msg.alert("Alert",error.message,Ext.emptyFn); 
+                    },this);
                 }else{
                     //If there is not an active campaign
-                    if(!this.checkActiveCampaign()){
-                        Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);          
-                    }
-                    else{
-                        //show the disconnect modal
-                        
-                       // var modal = Ext.create('FotoZap.view.disconnectChromecast');
+                   // if(!this.checkActiveCampaign()){
+                    //    Ext.Msg.alert('Social Wall','Please select a Campaign, then select the Cast Button.',Ext.emptyFn);          
+                    //}
+                        // var modal = Ext.create('FotoZap.view.disconnectChromecast');
                        var modal = this.getDiscoModal();
                         Ext.Viewport.add(modal);
                         modal.down('toolbar').setTitle(this.getDevice().getFriendlyName());
                         modal.show();
 
-                        
-                    }    
                 }
                 
             }
@@ -308,16 +336,17 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
            if(!this.getDevice()){
                 return;
             }
+            this.cleanUpSession();
            this.getDevice().off("ready");
            this.getDevice().off("disconnect");
            this.getCastButton().setIconCls('icon-cast');  
-            //   Ext.Msg.alert("Alert","The Device is ready to use",Ext.emptyFn);
+            //   Ext.Msg.alert("Alert","The Device is disconnected",Ext.emptyFn);
             this.getDevice().disconnect();
             this.setDevice(null);   
         
     },
     cleanUpSession:function(callback){
-        Ext.Msg.alert("Alert","clean up disconnect session fired",Ext.emptyFn); 
+        //Ext.Msg.alert("Alert","clean up disconnect session fired",Ext.emptyFn); 
         if(this.getAppSession()){
                 this.getAppSession().off("message");
                 this.getAppSession().off("disconnect");
@@ -343,10 +372,10 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
     },
     deviceConnected:function(){
         this.getCastButton().setIconCls('icon-cast-connected');
-        
+
         this.getDevice().getWebAppLauncher().launchWebApp('1E0F8D69').success(function (session) {
             
-        Ext.Msg.alert("Alert","We got into the Web App Launch",Ext.emptyFn);
+        //Ext.Msg.alert("Alert","We got into the Web App Launch",Ext.emptyFn);
         
         this.setAppSession(session.acquire());
         
@@ -355,7 +384,7 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
                 //Ext.Msg.alert("Alert","App Session Disconnect fired",Ext.emptyFn);
                 this.getAppSession().off("message");
                 this.getAppSession().off("disconnect");
-
+                    
                 
                 this.getAppSession().release();
                 this.setAppSession(null);
@@ -368,15 +397,16 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
             },this);
 
            this.getAppSession().on("ready",function(){
-                var send =this.getUsername() + " " +this.getPassword() + " "+ this.getActiveCampaign(); 
-                this.getAppSession().sendJSON({
-                    type:'campaignseleted',
-                    data:send
-                });
+                //var send =this.getUsername() + " " +this.getPassword() + " "+ this.getActiveCampaign(); 
+                //this.getAppSession().sendJSON({
+                 //   type:'campaignseleted',
+                  //  data:send
+                //});
+                alert('session is ready');
            },this);
 
           this.getAppSession().connect().success(function(){
-            Ext.Msg.alert("Alert","web app session success",Ext.emptyFn);
+            //Ext.Msg.alert("Alert","web app session success",Ext.emptyFn);
              //this.getAppSession().sendText("2nd Campaign"); 
              //    alert('session connected succesfully'); 
 
@@ -397,6 +427,12 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
     deviceDisconnected:function(){
      //Ext.Msg.alert("Alert","Device Disconnect Function",Ext.emptyFn);
       this.getCastButton().setIconCls('icon-cast');  
+
+            var webFilter = new ConnectSDK.CapabilityFilter([
+                "WebAppLauncher.Launch"
+            ]);
+            ConnectSDK.discoveryManager.setCapabilityFilters([webFilter]);
+      ConnectSDK.discoveryManager.startDiscovery();
       this.cleanUpDevice();
     },
     LogoutClicked:function(){
@@ -404,6 +440,7 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
        var that = this;
        Ext.Msg.confirm("Social Wall", "Are you sure you want to Logout?",function(buttonId){
         if(buttonId === 'yes') {         
+            that.cleanUpDevice();
         if(that.ConnectSDKAvailable()){
             ConnectSDK.discoveryManager.stopDiscovery();
         }    
@@ -411,7 +448,9 @@ Ext.Msg.alert('Social Wall','there was error connecting new session '+ error.mes
         Ext.Viewport.remove(Ext.Viewport.getActiveItem(), true);
         Ext.Viewport.setActiveItem(Ext.create('FotoZap.view.Main')); 
         //that.cleanUpSession().bind(that);
-        that.cleanUpDevice();
+        that.setActiveCampaign(null);
+        //alert(that);
+        //that.cleanUpDevice();
                 
         
     }
