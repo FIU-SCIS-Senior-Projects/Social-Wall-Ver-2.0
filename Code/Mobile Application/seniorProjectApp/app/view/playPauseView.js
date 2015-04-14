@@ -6,19 +6,19 @@
 Ext.define('FotoZap.view.playPauseView', {
     extend: 'Ext.Toolbar',
     requires: ['Ext.Button'],
-    xtype:'playpausebar',
+    xtype: 'playpausebar',
     config: {
-        docked:'bottom',
-    	layout:{
-            type:'hbox',
-            pack:'center'
+        docked: 'bottom',
+        layout: {
+            type: 'hbox',
+            pack: 'center'
         },
-    	items:[{
-                xtype:'button',
-                itemId:'playpause',
-                iconCls:'pause',
-                style:'color:black !important'
-        }]  
-}
-    
+        items: [{
+            xtype: 'button',
+            itemId: 'playpause',
+            iconCls: 'pause',
+            style: 'color:black !important'
+        }]
+    }
+
 });

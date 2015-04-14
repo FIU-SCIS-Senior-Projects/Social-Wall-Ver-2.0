@@ -8,34 +8,31 @@ Ext.define('FotoZap.controller.Cast', {
     requires: [],
 
     config: {
-        refs:{
-        	CastButton:'#castbutton'
+        refs: {
+            CastButton: '#castbutton'
         },
-        control:{
-        	CastButton:{
-        		tap:'checkAvailableDevices'
-        	}	
+        control: {
+            CastButton: {
+                tap: 'checkAvailableDevices'
+            }
         }
 
     },
-    checkAvailableDevices:function(){
-    	ConnectSDK.discoveryManager.pickDevice().success(function (device) {
-        function sendVideo () {
-            device.getMediaPlayer().playMedia("http://media.w3.org/2010/05/sintel/trailer.mp4", "video/mp4");
-        }
-        
-        if (device.isReady()) { // already connected
-            sendVideo();
-        } else {
-            device.on("ready", sendVideo);
-            device.connect();
-        }
-    })	},
-    launch:function(){
-        //	if(ConnectSDK != null){
-        //		alert('I was launched');
-        //		ConnectSDK.discoveryManager.startDiscovery();
-		//	}
+    checkAvailableDevices: function() {
+        ConnectSDK.discoveryManager.pickDevice().success(function(device) {
+            function sendVideo() {
+                device.getMediaPlayer().playMedia("http://media.w3.org/2010/05/sintel/trailer.mp4", "video/mp4");
+            }
+
+            if (device.isReady()) { // already connected
+                sendVideo();
+            } else {
+                device.on("ready", sendVideo);
+                device.connect();
+            }
+        });
+    },
+    launch: function() {
 
     }
 });
