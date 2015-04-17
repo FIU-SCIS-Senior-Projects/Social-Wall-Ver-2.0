@@ -56,23 +56,15 @@ Ext.application({
     },
 
     launch: function() {
-        // Destroy the #appLoadingIndicator element
+        
         Ext.fly('appLoadingIndicator').destroy();
-        //console.log(Ext.getStore('theUsers'));
-        //var user = Ext.create('FotoZap.model.User',{
-         //   username:'snoel006@fiu.edu',
-        //    password:'fotozap',
-        //    storeId:'theUsers'
-        //});
-    //localStorage.setItem("u","snoel006@fiu.edu");
-    //localStorage.setItem("p","fotozap");
-       //Ext.getStore('theUsers').load();
-        //Ext.getStore('theUsers').sync();
+        
+    
        setTimeout(function() {
         navigator.splashscreen.hide();
     }, 5000);
+        
         // Initialize the main view
-        this.setupLifeCycleEvents();
         Ext.Viewport.add(Ext.create('FotoZap.view.Main'));
     },
     setupLifeCycleEvents:function(){
