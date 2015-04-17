@@ -8,8 +8,8 @@
                     // Uncomment the line below and add the platforms you wish to build for
                     "platforms": "ios",
 
-                    "id": "com.myCompany.ZapCast",
-                    "name": "ZapCast"
+                    "id": "com.fotozap.socialwall",
+                    "name": "Slideshow"
                 }
             }
         }
