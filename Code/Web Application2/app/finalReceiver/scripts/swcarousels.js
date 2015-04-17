@@ -50,7 +50,13 @@ swcarousels.prototype.changeImages = function(newimagesobject){
 				initialized:false,
 				theimage:null,
 				path:thepath,
-				loaded:false
+				loaded:false,
+				aspectratio:{
+					x:null,
+					y:null,
+					awidth:null,
+					aheight:null
+				}
 			};
 			this.options.preImages.push(o);
 	};	
@@ -69,18 +75,16 @@ swcarousels.prototype.changeImages = function(newimagesobject){
 	this.state.preloadImage(0, function(){
 			that.state.preloadImage(1,function(){
 				that.state.images = that.options.images;
-				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
-				console.log(that.canvasBuffer.xStart);
-				console.log(that.canvasBuffer.yStart);
-				console.log(that.canvasBuffer.renderableWidth);
-				console.log(that.canvasBuffer.renderableHeight);
+				//that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
+				console.log(that.options.preImages);
+				//console.log(that.canvasBuffer.yStart);
+				//console.log(that.canvasBuffer.renderableWidth);
+				//console.log(that.canvasBuffer.renderableHeight);
 				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
 				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, 0, 0, that.options.width, that.options.height);		
 				that.animate.start();
 			});
 		});
-
-
 
 }
 
@@ -197,7 +201,14 @@ swcarousels.prototype.init = function(options){
 				initialized:false,
 				theimage:null,
 				path:thepath,
-				loaded:false
+				loaded:false,
+				aspectratio:{
+					x:null,
+					y:null,
+					awidth:null,
+					aheight:null
+				}
+
 			};
 			this.options.preImages.push(o);
 		};
@@ -206,13 +217,10 @@ swcarousels.prototype.init = function(options){
 		this.state.preloadImage(0, function(){
 			that.state.preloadImage(1,function(){
 				that.state.images = that.options.images;
-				that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
-				console.log(that.canvasBuffer.xStart);
-				console.log(that.canvasBuffer.yStart);
-				console.log(that.canvasBuffer.renderableWidth);
-				console.log(that.canvasBuffer.renderableHeight);
-				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
-				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, that.canvasBuffer.xStart, that.canvasBuffer.yStart, that.canvasBuffer.renderableWidth, that.canvasBuffer.renderableHeight);		
+				//that.canvasBuffer.fitImageOn(that.canvasBuffer.canvas,that.options.preImages[0].theimage);
+				console.log(that.options.preImages);
+				that.canvasBuffer.context.drawImage(that.options.preImages[0].theimage, that.options.preImages[0].aspectratio.x, that.options.preImages[0].aspectratio.y, that.options.preImages[0].aspectratio.awidth, that.options.preImages[0].aspectratio.aheight);		
+				that.canvasBuffer.scratch.drawImage(that.options.preImages[0].theimage, that.options.preImages[0].aspectratio.x, that.options.preImages[0].aspectratio.y, that.options.preImages[0].aspectratio.awidth, that.options.preImages[0].aspectratio.aheight);		
 				that.animate.start();
 			});
 		});
@@ -245,7 +253,7 @@ swcarousels.prototype.setupCanvasBuffer = function(){
 		return e;
 	}
 	
-	this.canvasBuffer.fitImageOn = function fitImageOn(canvas,imageObj){
+	this.canvasBuffer.fitImageOn = function fitImageOn(canvas,imageObj,index){
 		var imageAspectRatio = imageObj.width / imageObj.height;
   		var canvasAspectRatio = canvas.width / canvas.height;
   		//var renderableHeight, renderableWidth, xStart, yStart;
@@ -254,28 +262,42 @@ swcarousels.prototype.setupCanvasBuffer = function(){
   // and place the image centrally along width
   if(imageAspectRatio < canvasAspectRatio) {
       console.log('aspect ration is less than the canvas');
-      that.canvasBuffer.renderableHeight = canvas.height;
-      that.canvasBuffer.renderableWidth = imageObj.width * (that.canvasBuffer.renderableHeight / imageObj.height);
-      that.canvasBuffer.xStart = (canvas.width - that.canvasBuffer.renderableWidth) / 2;
-      that.canvasBuffer.yStart = 0;
+      //that.canvasBuffer.renderableHeight = canvas.height;
+      that.options.preImages[index].aspectratio.aheight = canvas.height;
+      //that.canvasBuffer.renderableWidth = imageObj.width * (that.canvasBuffer.renderableHeight / imageObj.height);
+      that.options.preImages[index].aspectratio.awidth = imageObj.width * ( that.options.preImages[index].aspectratio.aheight / imageObj.height);
+     // that.canvasBuffer.xStart = (canvas.width - that.canvasBuffer.renderableWidth) / 2;
+      	that.options.preImages[index].aspectratio.x = (canvas.width - that.options.preImages[index].aspectratio.awidth) / 2;
+      //that.canvasBuffer.yStart = 0;
+      that.options.preImages[index].aspectratio.y = 0;
   }
 
   // If image's aspect ratio is greater than canvas's we fit on width
   // and place the image centrally along height
   else if(imageAspectRatio > canvasAspectRatio) {
   	console.log('aspect ration is greater than the canvas');
-      that.renderableWidth = canvas.width
-      that.renderableHeight = imageObj.height * (that.renderableWidth / imageObj.width);
-      that.xStart = 0;
-      that.yStart = (canvas.height - that.renderableHeight) / 2;
+      //that.renderableWidth = canvas.width
+      that.options.preImages[index].aspectratio.awidth = canvas.width;
+
+      //that.renderableHeight = imageObj.height * (that.renderableWidth / imageObj.width);
+      that.options.preImages[index].aspectratio.aheight = imageObj.height * (that.options.preImages[index].aspectratio.awidth / imageObj.width);
+      //that.xStart = 0;
+      that.options.preImages[index].aspectratio.x = 0;
+      //that.yStart = (canvas.height - that.renderableHeight) / 2;
+      that.options.preImages[index].aspectratio.y = (canvas.height - that.options.preImages[index].aspectratio.aheight) / 2;
   }
 
   // Happy path - keep aspect ratio
   else {
-      that.renderableHeight = canvas.height;
-      that.renderableWidth = canvas.width;
-      that.xStart = 0;
-      that.yStart = 0;
+     // that.renderableHeight = canvas.height;
+     that.options.preImages[index].aspectratio.aheight = canvas.height;
+     // that.renderableWidth = canvas.width;
+     that.options.preImages[index].aspectratio.awidth = canvas.width;
+      //that.xStart = 0;
+      that.options.preImages[index].aspectratio.x = 0;
+      //that.yStart = 0;
+      that.options.preImages[index].aspectratio.y = 0;
+
   }
 	}
 
@@ -388,7 +410,8 @@ this.animationFunction.fade = function(options, state, canvasBuffer) {
 
 this.animationFunction.hardcut = function(options, state, canvasBuffer){
 	if(state.i ==1){
-		canvasBuffer.context.drawImage(state.preTargetImage(), canvasBuffer.xStart,canvasBuffer.yStart, canvasBuffer.renderableWidth, canvasBuffer.renderableHeight);
+		canvasBuffer.context.clearRect(0,0,canvasBuffer.width, canvasBuffer.height);
+		canvasBuffer.context.drawImage(state.preTargetImage(), options.preImages[state.currentFrame].aspectratio.x,options.preImages[state.currentFrame].aspectratio.y, options.preImages[state.currentFrame].aspectratio.awidth, options.preImages[state.currentFrame].aspectratio.aheight);
 	}
 }
 
@@ -625,7 +648,9 @@ swcarousels.prototype.setUpState = function(){
 			imageObj.theimage = temp;
 			imageObj.theimage.crossOrigin="anonymous";
 			imageObj.loaded = false;
+			var swobject = that;
 			temp.onload = function(){
+				swobject.canvasBuffer.fitImageOn(swobject.canvasBuffer.canvas,temp,imageIndex);
 				imageObj.loaded = true;
 			console.log('image loaded');
 				if(callback){
@@ -633,7 +658,7 @@ swcarousels.prototype.setUpState = function(){
 				}
 			}
 			imageObj.initialized = true;
-            		imageObj.theimage.src = imageObj.path;
+            imageObj.theimage.src = imageObj.path;
 		}
 		console.log('image at index '+imageIndex + ' is initialized');
 	};
