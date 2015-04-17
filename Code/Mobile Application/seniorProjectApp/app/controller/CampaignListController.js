@@ -64,7 +64,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 this.setupWebAppSession(websession);
             }, this).error(function(error) {
                 this.hideplayPause();
-                Ext.Msg.alert('Slideshow', "Error!! Cannot Join Device.", Ext.emptyFn);
+                Ext.Msg.alert('Alert', "Error!! Cannot Join Device.", Ext.emptyFn);
             }, this);
         };
         var newCall = rejoin.bind(this);
@@ -230,7 +230,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
                 this.toggleActiveCampaignView(selectedItem.element, ' unhide', '.plus');
             } else {
                 if (!this.getDevice() && !this.deviceIsConnecting) {
-                    Ext.Msg.alert('Slideshow', "Please connect to a Device, then select a Campaign", Ext.emptyFn);
+                    Ext.Msg.alert('Alert', "Please connect to a Device, then select a Campaign.", Ext.emptyFn);
                 }
 
             }
@@ -348,7 +348,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
                         callback();
                     }
                 }, this).error(function(error) {
-                    Ext.Msg.alert("Alert", error.message, Ext.emptyFn);
+                    Ext.Msg.alert("Alert", "Error!! Could not disconnect session.", Ext.emptyFn);
                 }, this);
 
         } else {
@@ -403,7 +403,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     LogoutClicked: function() {
         var that = this;
-        Ext.Msg.confirm("Slideshow", "Are you sure you want to Logout?", function(buttonId) {
+        Ext.Msg.confirm("Alert", "Are you sure you want to Logout?", function(buttonId) {
             if (buttonId === 'yes') {
                 that.cleanUpDevice();
                 if (that.ConnectSDKAvailable()) {
