@@ -403,7 +403,7 @@ Ext.define('FotoZap.controller.CampaignListController', {
     },
     LogoutClicked: function() {
         var that = this;
-        Ext.Msg.confirm("Social Wall", "Are you sure you want to Logout?", function(buttonId) {
+        Ext.Msg.confirm("Slideshow", "Are you sure you want to Logout?", function(buttonId) {
             if (buttonId === 'yes') {
                 that.cleanUpDevice();
                 if (that.ConnectSDKAvailable()) {
