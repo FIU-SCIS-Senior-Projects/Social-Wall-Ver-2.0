@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="socialWall-receiver">
+<head>
+    <meta charset="utf-8">
+    <title>Slideshow</title>
+    <link href="bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="ssc.css">
+</head>
+
+<body ng-controller="MainCtrl">
+    <div class="col-xs-12" ng-if="progress !== 100">
+        <progressbar class="progress-striped" value="progress">{{progress | number:0}}%</progressbar>
+    </div>
+    <img ng-show="loaded" bg-image class="fullBg {{currentAnimation}}" ng-repeat="slide in slides"
+         ng-if="isCurrentSlideIndex($index)"
+         ng-src="{{slide.src}}">
+
+    <ul ng-show="loaded" class="nav nav-pills">
+        <li ng-class="{'active':isCurrentAnimation('slide-left-animation')}"><a ng-click="setCurrentAnimation('slide-left-animation')">LEFT</a></li>
+        <li ng-class="{'active':isCurrentAnimation('slide-down-animation')}"><a ng-click="setCurrentAnimation('slide-down-animation')">DOWN</a></li>
+        <li ng-class="{'active':isCurrentAnimation('instant-animation')}"><a ng-click="setCurrentAnimation('instant-animation')">INSTANT</a></li>
+        <li ng-class="{'active':isCurrentAnimation('fade-in-animation')}"><a ng-click="setCurrentAnimation('fade-in-animation')">FADE</a></li>
+    </ul>
+
+    <script src="jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenMax.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.min.js"></script>
+    <script src="ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="http://code.createjs.com/preloadjs-0.4.1.min.js"></script>
+    <script src="ss.js"></script>
+
+
+</body>
+</html>

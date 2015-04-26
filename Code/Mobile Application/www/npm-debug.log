@@ -1,0 +1,85 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'cordova@3.1.0-0.2.0\'' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose cache add [ 'cordova@3.1.0-0.2.0\'', null ]
+6 verbose cache add name=undefined spec="cordova@3.1.0-0.2.0'" args=["cordova@3.1.0-0.2.0'",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'cordova@3.1.0-0.2.0%27',
+7 verbose parsed url   path: 'cordova@3.1.0-0.2.0%27',
+7 verbose parsed url   href: 'cordova@3.1.0-0.2.0%27' }
+8 verbose cache add name="cordova" spec="3.1.0-0.2.0'" args=["cordova","3.1.0-0.2.0'"]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: '3.1.0-0.2.0%27',
+9 verbose parsed url   path: '3.1.0-0.2.0%27',
+9 verbose parsed url   href: '3.1.0-0.2.0%27' }
+10 verbose addNamed [ 'cordova', '3.1.0-0.2.0\'' ]
+11 verbose addNamed [ null, null ]
+12 silly lockFile 195668c4-cordova-3-1-0-0-2-0 cordova@3.1.0-0.2.0'
+13 verbose lock cordova@3.1.0-0.2.0' C:\Users\AdminPC\AppData\Roaming\npm-cache\195668c4-cordova-3-1-0-0-2-0.lock
+14 info addNameTag [ 'cordova', '3.1.0-0.2.0\'' ]
+15 verbose request where is /cordova
+16 verbose request registry https://registry.npmjs.org/
+17 verbose request id 6deda4faa2e7f95e
+18 verbose url raw /cordova
+19 verbose url resolving [ 'https://registry.npmjs.org/', './cordova' ]
+20 verbose url resolved https://registry.npmjs.org/cordova
+21 verbose request where is https://registry.npmjs.org/cordova
+22 info trying registry request attempt 1 at 11:36:24
+23 verbose etag "32YT5T37PFKCKXJLRUJ4ZZ8S"
+24 http GET https://registry.npmjs.org/cordova
+25 http 200 https://registry.npmjs.org/cordova
+26 silly registry.get cb [ 200,
+26 silly registry.get   { date: 'Wed, 10 Dec 2014 16:36:24 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"4PLMWGM2KPL1UE9F3XYSWFGCY"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '333709',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '48',
+26 silly registry.get     'x-served-by': 'cache-jfk1023-JFK',
+26 silly registry.get     'x-cache': 'HIT',
+26 silly registry.get     'x-cache-hits': '10',
+26 silly registry.get     'x-timer': 'S1418229384.695271,VS0,VE0',
+26 silly registry.get     vary: 'Accept',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly lockFile 195668c4-cordova-3-1-0-0-2-0 cordova@3.1.0-0.2.0'
+28 silly lockFile 195668c4-cordova-3-1-0-0-2-0 cordova@3.1.0-0.2.0'
+29 error notarget No compatible version found: cordova@'3.1.0-0.2.0''
+29 error notarget Valid install targets:
+29 error notarget ["3.6.0-0.2.8","0.0.1","0.0.2","0.0.3","0.0.4","0.0.5","0.0.6","0.0.7","0.0.8","0.0.9","0.1.0","0.1.1","0.1.2","0.1.3","0.1.4","0.1.5","0.1.6","0.1.7","0.1.8","0.1.9","0.1.10","0.1.11","0.1.12","0.1.13","0.1.14","2.2.0","2.3.0","2.3.1","2.3.2","2.3.3","2.3.5","2.3.6","2.4.0","2.4.1","2.4.2","2.4.3","2.4.4","2.4.5","2.4.6","2.4.7","2.4.8","2.4.9","2.4.10","2.5.0","2.5.2","2.5.3","2.5.4","2.5.5","2.6.0","2.6.1","2.6.2","2.7.0-rc.1","2.7.1-rc.1","2.7.2","2.7.3","2.7.4","2.8.0","2.8.1","2.8.2","2.8.3","2.8.4","2.8.5","2.8.6","2.8.7","2.8.8","2.8.9","2.8.10","2.8.11","2.8.12","2.8.13","2.8.14","2.8.15","2.8.16","2.8.17","2.8.18","2.8.19","2.8.20","2.8.21","2.8.22","2.8.23","2.8.24","2.8.25","2.9.0","2.9.1","2.9.2","2.9.3","2.9.4","2.9.5","2.9.6","2.9.7","3.0.0-rc1","3.0.0-rc1-1","3.0.0-rc1-3","3.0.0","3.0.1","3.0.2","3.0.3","3.0.4","3.0.5","3.0.6","3.0.7","3.0.8","3.0.9","3.0.10","3.1.0-0.1.0","3.1.0-0.2.0","3.2.0-rc.1","3.2.0-0.1.0","3.2.0-0.2.0","3.2.0-0.3.0","3.2.0-0.4.0","3.3.0-rc.1","3.3.0-0.1.1","3.3.1-0.1.2","2.9.0-rc1","3.3.1-0.3.0","3.3.1-0.3.1","3.3.1-0.4.1","3.3.1-0.4.2","3.4.0-0.1.0","3.4.0-0.1.1","3.4.0-0.1.2","3.4.0-0.1.3","0.0.0-fake","3.4.1-0.1.0","3.5.0-0.2.0","3.5.0-0.2.1","3.5.0-0.2.2","3.5.0-0.2.3","3.5.0-0.2.4","3.5.0-0.2.6","3.5.0-0.2.7","3.6.0-0.2.8","3.6.0-0.2.9","3.6.1-0.2.10","3.6.3-0.2.11","3.6.3-0.2.12","3.6.3-0.2.13","4.0.0","4.0.1","4.1.0","4.1.1","4.1.2","4.1.3-nightly.2014.10.21"]
+29 error notarget
+29 error notarget This is most likely not a problem with npm itself.
+29 error notarget In most cases you or one of your dependencies are requesting
+29 error notarget a package version that doesn't exist.
+30 error System Windows_NT 6.2.9200
+31 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "cordova@3.1.0-0.2.0'"
+32 error cwd C:\Users\AdminPC\Documents\NetBeansProjects\www
+33 error node -v v0.10.32
+34 error npm -v 1.4.28
+35 error code ETARGET
+36 verbose exit [ 1, true ]
